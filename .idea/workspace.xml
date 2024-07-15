@@ -38,11 +38,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5605591b-1c2b-4c67-9b35-2a846798bb90" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/res/values/colors.xml" afterDir="false" />
+    <list default="true" id="5605591b-1c2b-4c67-9b35-2a846798bb90" name="Changes" comment="feat: added functional home screen">
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/BlankFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/BlankFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -509,6 +506,19 @@
       <option name="presentableId" value="Default" />
       <updated>1720692857215</updated>
     </task>
+    <task id="LOCAL-00001" summary="feat: added functional home screen">
+      <option name="closed" value="true" />
+      <created>1721002213865</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1721002213865</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: added functional home screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: added functional home screen" />
   </component>
 </project>
