@@ -39,6 +39,8 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.firebase.database)
     testImplementation(libs.junit)
+    testImplementation("org.mockito:mockito-all:1.10.19")
+    testImplementation("org.robolectric:robolectric:4.7.3")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
