@@ -1,5 +1,7 @@
 package com.b07group2.taamapp;
 
+import android.net.Uri;
+
 import com.google.firebase.database.DataSnapshot;
 
 import java.io.File;
@@ -12,10 +14,10 @@ public class ItemCollection {
     private String category;
     private String period;
     private String description;
-    private File[] media;
-    private static String[] validCategories = {"Jade", "Paintings", "Calligraphy", "Rubbings",
+    private Uri[] media;
+    public static String[] validCategories = {"Jade", "Paintings", "Calligraphy", "Rubbings",
             "Bronze", "Brass and Copper", "Gold and Silvers", "Lacquer", "Enamels"};
-    private static String[] validPeriods = {"Xia", "Shang", "Zhou", "Chuanqiu", "Zhanggou", "Qin",
+    public static String[] validPeriods = {"Xia", "Shang", "Zhou", "Chuanqiu", "Zhanggou", "Qin",
             "hang", "Shangou", "Ji", "South and North", "Shui", "Tang", "Liao", "Song",
             "Jin", "Yuan", "Ming", "Qing", "Modern"};
 
@@ -24,13 +26,16 @@ public class ItemCollection {
     }
 
     // Constructor with media field
-    public ItemCollection(int lotNumber, String name, String category, String period, String description, File[] media) {
+    public ItemCollection(int lotNumber, String name, String category, String period, String description, String[] media) {
         this.lotNumber = lotNumber;
         this.name = name;
         this.category = category;
         this.period = period;
         this.description = description;
-        this.media = media;
+        this.media = new Uri[media.length];
+        for (int i = 0; i < media.length; i++) {
+            this.media[i] = Uri.parse(media[i]);
+        }
     }
 
     // Constructor without media field
@@ -43,18 +48,53 @@ public class ItemCollection {
     }
 
     // Getters and setters
-    public int getLotNumber() { return lotNumber; }
-    public void setLotNumber(int LotNumber) { this.lotNumber = lotNumber; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
-    public String getPeriod() { return period; }
-    public void setPeriod(String period) { this.period = period; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public File[] getMedia() { return media; }
-    public void setMedia(File[] media) { this.media = media; }
+    public int getLotNumber() {
+        return lotNumber;
+    }
+
+    public void setLotNumber(int lotNumber) {
+        this.lotNumber = lotNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Uri[] getMedia() {
+        return media;
+    }
+
+    public void setMedia(Uri[] media) {
+        this.media = media;
+    }
 
 
     @Override

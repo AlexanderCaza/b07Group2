@@ -1,8 +1,8 @@
+
 plugins {
     alias(libs.plugins.android.application)
 
     // Firebase
-    id("com.android.application")
     id("com.google.gms.google-services")
 }
 
