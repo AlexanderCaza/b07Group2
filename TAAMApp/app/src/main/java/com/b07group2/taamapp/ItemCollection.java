@@ -21,6 +21,7 @@ public class ItemCollection {
             "hang", "Shangou", "Ji", "South and North", "Shui", "Tang", "Liao", "Song",
             "Jin", "Yuan", "Ming", "Qing", "Modern"};
 
+    // Special constructor required by Firebase
     public ItemCollection() {
 
     }
@@ -125,4 +126,5 @@ public class ItemCollection {
     public static boolean isValidPeriod(String period) {
         return Arrays.asList(validPeriods).contains(period);
     }
+
 }

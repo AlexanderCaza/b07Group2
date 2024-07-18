@@ -1,4 +1,7 @@
-package com.b07group2.taamapp;
+// CollectionsDatabase Class Unit Tests - Cannot run without fully compiled app, leaving in commit
+// in case they can be converted to tests that can run. Remove before full release.
+
+/* package com.b07group2.taamapp;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -27,3 +30,5 @@ public class CollectionsDatabaseUnitTest {
         assertFalse(db.getItemCollections().contains(testCollection));
     }
 }
+
+*/
