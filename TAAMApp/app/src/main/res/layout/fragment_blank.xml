@@ -9,10 +9,12 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="349dp"
-        android:layout_height="115dp"
-        android:layout_marginTop="157dp"
-        android:layout_marginBottom="516dp"
+        android:layout_width="356dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="50dp"
         android:text="IF YOU SEE THIS THEN IT WORKED!!"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -20,7 +22,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

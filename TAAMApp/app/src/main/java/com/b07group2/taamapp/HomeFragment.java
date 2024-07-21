@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
         buttonNext.setOnClickListener(v -> {
             if (currentPage < maxPage - 1) {
                 currentPage++;
-                boxListHistory.add(new ArrayList<>(boxAdapter.getBoxList())); // Save current box list
+                boxListHistory.add(new ArrayList<>(boxAdapter.getBoxList()));
                 List<String> nextPageItems = getCurrentPageItems();
                 boxAdapter.setBoxList(nextPageItems);
                 boxAdapter.notifyDataSetChanged();
@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        boxListHistory.add(new ArrayList<>(boxList)); // Initial box list history
+        boxListHistory.add(new ArrayList<>(boxList));
 
         return view;
     }
@@ -110,7 +110,7 @@ public class HomeFragment extends Fragment {
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_home_container, fragment);
-        transaction.addToBackStack(null); // Add the transaction to the back stack
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
