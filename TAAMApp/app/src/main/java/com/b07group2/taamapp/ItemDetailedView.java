@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
@@ -52,7 +53,8 @@ public class ItemDetailedView extends AppCompatActivity {
             }
         });
 
-        presenter = new ItemDetailedPresenter(this, new ItemDetailedModel());
+        presenter = new ItemDetailedPresenter(this);
+        presenter.connectDatabase();
 
         presenter.setInformation(item_lot);
     }
@@ -104,5 +106,15 @@ public class ItemDetailedView extends AppCompatActivity {
 
             return false;
         }
+    }
+
+    public void showWarning(String message) {
+        // Show alert with message to user
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 }

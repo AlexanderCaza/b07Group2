@@ -1,19 +1,43 @@
 package com.b07group2.taamapp;
 
+import android.net.Uri;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class ItemDetailedPresenter {
     ItemDetailedView view;
-    ItemDetailedModel model;
+    CollectionsDatabase model;
 
-    public ItemDetailedPresenter(ItemDetailedView view, ItemDetailedModel model) {
+    public ItemDetailedPresenter(ItemDetailedView view) {
         this.view = view;
-        this.model = model;
+        this.model = null;
+    }
+
+    public void connectDatabase(){
+        model = new CollectionsDatabase();
     }
 
     public void setInformation(int item_id) {
         // get the ItemCollection from model as item_id
-        ItemCollection item = model.getItem(item_id);
+
+        ArrayList<ItemCollection> items = model.getItemCollections();
+
+        ItemCollection item = null;
+        for (ItemCollection i : items) {
+            if (i.getLotNumber() == item_id) {
+                item = i;
+                break;
+            }
+        }
+
+        if (item == null) {
+            view.showWarning("Item not found");
+            view.setInformation(0, "Item not found", "Item not found", "Item not found", "Item not found");
+            return;
+        }
+
 
         // set the information in the view
         int lot = item.getLotNumber();
@@ -22,14 +46,18 @@ public class ItemDetailedPresenter {
         String period = item.getPeriod();
         String description = item.getDescription();
 
-        view.setInformation(lot, name, category, period, description);
+        boolean res = view.setInformation(lot, name, category, period, description);
+        while (!res){
+            res =view.setInformation(lot, name, category, period, description);
+        }
 
-        File [] files = item.getMedia();
-        for (File file : files) {
-            if (file.getName().endsWith(".jpg") || file.getName().endsWith(".png")) {
-                view.addPicture(file);
-            } else if (file.getName().endsWith(".mp4")) {
-                view.addVideo(file);
+        // Show media
+        Uri[] files = item.getMedia();
+        for (Uri file : files) {
+            if (file.toString().endsWith(".jpg") || file.toString().endsWith(".png")) {
+                view.addPicture(new File(Objects.requireNonNull(file.getPath())));
+            } else if (file.toString().endsWith(".mp4")) {
+                view.addVideo(new File(Objects.requireNonNull(file.getPath())));
             }
         }
     }
@@ -47,16 +75,12 @@ public class ItemDetailedPresenter {
             res =view.setInformation(lot, name, category, period, description);
         }
 
-        File [] files = item.getMedia();
-        for (File file : files) {
-            if (file.getName().endsWith(".jpg") || file.getName().endsWith(".png")) {
-                if (!view.addPicture(file)){
-                    view.addPicture(file);
-                }
-            } else if (file.getName().endsWith(".mp4")) {
-                if (!view.addVideo(file)){
-                    view.addVideo(file);
-                }
+        Uri[] files = item.getMedia();
+        for (Uri file : files) {
+            if (file.toString().endsWith(".jpg") || file.toString().endsWith(".png")) {
+                view.addPicture(new File(Objects.requireNonNull(file.getPath())));
+            } else if (file.toString().endsWith(".mp4")) {
+                view.addVideo(new File(Objects.requireNonNull(file.getPath())));
             }
         }
     }
