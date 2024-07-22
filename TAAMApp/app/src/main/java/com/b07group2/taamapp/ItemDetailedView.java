@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -56,24 +57,52 @@ public class ItemDetailedView extends AppCompatActivity {
         presenter.setInformation(item_lot);
     }
 
-    public void setInformation(String lot, String name, String category, String period, String description) {
-        lot_text.setText(lot);
-        name_text.setText(name);
-        category_text.setText(category);
-        period_text.setText(period);
-        description_text.setText(description);
+    public boolean setInformation(int lot, String name, String category, String period, String description) {
+        try{
+            lot_text.setText(Integer.toString(lot));
+            name_text.setText(name);
+            category_text.setText(category);
+            period_text.setText(period);
+            description_text.setText(description);
+            return true;
+        }
+        catch (Exception e){
+            // log the error
+            Log.e("ItemDetailedView", "Error setting information: " + e.getMessage());
+
+            return false;
+        }
     }
 
-    public void addPicture(File file) {
-        ImageView imageView = new ImageView(this);
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-        imageView.setImageBitmap(bitmap);
-        media_layout.addView(imageView);
+    public boolean addPicture(File file) {
+        try {
+            ImageView imageView = new ImageView(this);
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imageView.setImageBitmap(bitmap);
+            media_layout.addView(imageView);
+
+            return true;
+        }
+        catch (Exception e){
+            // log the error
+            Log.e("ItemDetailedView", "Error adding picture: " + e.getMessage());
+
+            return false;
+        }
     }
 
-    public void addVideo(File file) {
-        VideoView videoView = new VideoView(this);
-        videoView.setVideoURI(Uri.parse(file.getAbsolutePath()));
-        media_layout.addView(videoView);
+    public boolean addVideo(File file) {
+        try {
+            VideoView videoView = new VideoView(this);
+            videoView.setVideoURI(Uri.parse(file.getAbsolutePath()));
+            media_layout.addView(videoView);
+            return true;
+        }
+        catch (Exception e){
+            // log the error
+            Log.e("ItemDetailedView", "Error adding video: " + e.getMessage());
+
+            return false;
+        }
     }
 }
