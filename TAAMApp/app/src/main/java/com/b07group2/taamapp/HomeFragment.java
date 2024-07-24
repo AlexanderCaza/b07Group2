@@ -8,7 +8,6 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,7 +63,7 @@ public class HomeFragment extends Fragment {
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new BlankFragment());
+                loadFragment(new removeFragment());
                 //put fragment name here instead of BlankFragment
             }
         });
@@ -72,7 +71,10 @@ public class HomeFragment extends Fragment {
         buttonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new BlankFragment());
+                //loadFragment(new BlankFragment());
+
+                System.out.println("adding add fragment");
+                loadFragment(new addFragment());
                 //put fragment name here instead of BlankFragment
             }
         });
