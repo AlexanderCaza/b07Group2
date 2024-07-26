@@ -57,7 +57,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 app:helperTextTextColor="#FF0000">
                 <AutoCompleteTextView
-                    android:id="@+id/autoCompleteCategories"
+                    android:id="@+id/autoCompleteCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"/>

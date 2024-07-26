@@ -43,53 +43,53 @@ public class addFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_blank, container, false);
+        View view = inflater.inflate(R.layout.fragment_add, container, false);
+
+        autoCompleteCategories = view.findViewById(R.id.autoCompleteCategory);
+        adapterCategories = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_item, validCategories);
+        autoCompleteCategories.setAdapter(adapterCategories);
+        autoCompleteCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(getActivity().getApplicationContext(), "Category: " + item, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        autoCompletePeriods = view.findViewById(R.id.autoCompletePeriod);
+        adapterPeriods = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_item, validPeriods);
+        autoCompletePeriods.setAdapter(adapterPeriods);
+        autoCompletePeriods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(getActivity().getApplicationContext(), "Period: " + item, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        lotInput = view.findViewById(R.id.lotInput);
+        nameInput = view.findViewById(R.id.nameInput);
+        categoryInput = view.findViewById(R.id.categoryInput);
+        periodInput = view.findViewById(R.id.periodInput);
+        descriptionInput = view.findViewById(R.id.descriptionInput);
+
+        //add event listener for submit Button
+        Button submitButton = view.findViewById(R.id.submitButton);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean verifiedInput = true;
+                verifiedInput = verifiedInput && verifyLotInput();
+                verifiedInput = verifiedInput && verifyNameInput();
+                verifiedInput = verifiedInput && verifyCategoryInput();
+                verifiedInput = verifiedInput && verifyPeriodInput();
+                Log.d("Verified Input", String.valueOf(verifiedInput));
+
+            }
+        });
         return view;
-//        autoCompleteCategories = view.findViewById(R.id.autoCompleteCategories);
-//        adapterCategories = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_item, validCategories);
-//        autoCompleteCategories.setAdapter(adapterCategories);
-//        autoCompleteCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                String item = adapterView.getItemAtPosition(i).toString();
-//                Toast.makeText(getActivity().getApplicationContext(), "Category: " + item, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        autoCompletePeriods = view.findViewById(R.id.autoCompletePeriod);
-//        adapterPeriods = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_item, validPeriods);
-//        autoCompletePeriods.setAdapter(adapterPeriods);
-//        autoCompletePeriods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                String item = adapterView.getItemAtPosition(i).toString();
-//                Toast.makeText(getActivity().getApplicationContext(), "Period: " + item, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//
-//        lotInput = view.findViewById(R.id.lotInput);
-//        nameInput = view.findViewById(R.id.nameInput);
-//        categoryInput = view.findViewById(R.id.categoryInput);
-//        periodInput = view.findViewById(R.id.periodInput);
-//        descriptionInput = view.findViewById(R.id.descriptionInput);
-//
-//        //add event listener for submit Button
-//        Button submitButton = view.findViewById(R.id.submitButton);
-//
-//        submitButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                boolean verifiedInput = true;
-//                verifiedInput = verifiedInput && verifyLotInput();
-//                verifiedInput = verifiedInput && verifyNameInput();
-//                verifiedInput = verifiedInput && verifyCategoryInput();
-//                verifiedInput = verifiedInput && verifyPeriodInput();
-//                Log.d("Verified Input", String.valueOf(verifiedInput));
-//
-//            }
-//        });
-//        return view;
     }
     private boolean verifyLotInput() {
         if(lotInput.getEditText().getText().length() > 0) {
