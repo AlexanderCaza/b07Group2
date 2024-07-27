@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment(), R.id.fragment_home_container);
+            loadFragment(new HomeUserFragment(), R.id.fragment_home_container);
         }
     }
 

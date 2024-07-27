@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public abstract class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private BoxAdapter boxAdapter;
@@ -26,13 +26,11 @@ public class HomeFragment extends Fragment {
     private List<List<String>> boxListHistory = new ArrayList<>(); //keep history of previous pages
 
     @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
+
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View view) {
 
         Button buttonView = view.findViewById(R.id.buttonView);
         Button buttonSearch = view.findViewById(R.id.buttonSearch);
-        Button buttonAdmin = view.findViewById(R.id.buttonAdmin);
         Button buttonNext = view.findViewById(R.id.buttonNext);
 
         boxList = new ArrayList<>();
@@ -48,8 +46,6 @@ public class HomeFragment extends Fragment {
         boxAdapter = new BoxAdapter(boxList);
         recyclerView.setAdapter(boxAdapter);
 
-
-
         buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,14 +58,6 @@ public class HomeFragment extends Fragment {
         });
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new BlankFragment());
-                //put fragment name here instead of BlankFragment
-            }
-        });
-
-        buttonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadFragment(new BlankFragment());
@@ -107,7 +95,7 @@ public class HomeFragment extends Fragment {
         return currentPage > 0;
     }
 
-    private void loadFragment(Fragment fragment) {
+    protected void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_home_container, fragment);
         transaction.addToBackStack(null);
