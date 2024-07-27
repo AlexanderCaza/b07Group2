@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">TAAM App</string>
+    <string name="back_button_label">Back</string>
+    <string name="lot_number_label">Lot Number:</string>
+    <string name="item_name_label">Name:</string>
+    <string name="item_category_label">Category:</string>
+    <string name="item_period_label">Period:</string>
+    <string name="item_description_label">Description:</string>
 </resources>
