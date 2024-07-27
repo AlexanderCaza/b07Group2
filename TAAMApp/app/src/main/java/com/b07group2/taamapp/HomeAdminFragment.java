@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeUserFragment extends HomeFragment {
+public class HomeAdminFragment extends HomeFragment {
 
     private RecyclerView recyclerView;
     private BoxAdapter boxAdapter;
@@ -25,14 +25,14 @@ public class HomeUserFragment extends HomeFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
+        View view = inflater.inflate(R.layout.activity_admin_home_fragment, container, false);
 
         Button buttonAdmin = view.findViewById(R.id.buttonReport);
 
         buttonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new HomeAdminFragment());
+                loadFragment(new BlankFragment());
                 //put fragment name here instead of BlankFragment
             }
         });
