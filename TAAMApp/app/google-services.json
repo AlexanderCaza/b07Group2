@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1057334144375",
+    "project_id": "cscb07-70b84",
+    "storage_bucket": "cscb07-70b84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057334144375:android:172c961eaf62ea17444572",
+        "android_client_info": {
+          "package_name": "com.b07group2.taamapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPgMNEsLr8TF_614p98O4IEkJFzUDS-L0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
