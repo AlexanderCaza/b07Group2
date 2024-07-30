@@ -40,10 +40,13 @@
   <component name="ChangeListManager">
     <list default="true" id="5605591b-1c2b-4c67-9b35-2a846798bb90" name="Changes" comment="feat (tests): added unit tests for compatible BoxAdapter methods&#10;fix: fixed bug of onBackPressed override where pressing back would crash the app">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/BoxAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/BoxAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/BoxesFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/BoxesFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/CollectionsDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/CollectionsDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/HomeFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_home_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_home_fragment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/fragment_blank.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/fragment_blank.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/HomeUserFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/HomeUserFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/item_box.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/item_box.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +69,9 @@
     <system id="GRADLE">
       <state>
         <task path="$PROJECT_DIR$/app">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/TAAMApp">
           <activation />
         </task>
         <projects_view>
@@ -112,7 +118,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="9f4f9027d21276d032cd423d66978562378e1fe0" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -158,7 +164,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
-    "git-widget-placeholder": "#2 on feature/SCRUM-3-7/homepage",
+    "git-widget-placeholder": "feature/SCRUM-19/view-collection",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/adamc/AndroidStudioProjects/b07Group2/TAAMApp/settings.gradle.kts",
     "project.structure.last.edited": "SDK Location",
@@ -608,9 +614,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.BoxAdapterUnitTest" />
+        <item itemvalue="Gradle.BoxAdapterUnitTest.testSetBoxList" />
         <item itemvalue="Gradle.BoxAdapterUnitTest (1)" />
         <item itemvalue="Gradle.BoxAdapterTest" />
-        <item itemvalue="Gradle.BoxAdapterUnitTest.testSetBoxList" />
+        <item itemvalue="Gradle.BoxAdapterUnitTest" />
       </list>
     </recent_temporary>
   </component>

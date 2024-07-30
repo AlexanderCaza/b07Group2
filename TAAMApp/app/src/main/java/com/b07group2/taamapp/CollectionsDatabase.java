@@ -27,7 +27,7 @@ public class CollectionsDatabase {
 
 
     public CollectionsDatabase() {
-        this.storage = FirebaseStorage.getInstance();
+        this.storage = FirebaseStorage.getInstance("https://cscb07-70b84-default-rtdb.firebaseio.com/");
         // DEBUG
         System.out.println("DB Data Changed");
         this.storageRef = storage.getReference();
