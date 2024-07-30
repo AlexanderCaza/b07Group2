@@ -27,12 +27,10 @@ public class CollectionsDatabase {
 
 
     public CollectionsDatabase() {
-        this.storage = FirebaseStorage.getInstance("https://cscb07-70b84-default-rtdb.firebaseio.com/");
-        // DEBUG
-        System.out.println("DB Data Changed");
+        this.storage = FirebaseStorage.getInstance("gs://cscb07-70b84.appspot.com");
         this.storageRef = storage.getReference();
-        this.dbRef = FirebaseDatabase.getInstance().
-                getReference("collections");
+        this.dbRef = FirebaseDatabase.getInstance("https://cscb07-70b84-default-rtdb.firebaseio.com/").
+                getReference();
         this.dbListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
