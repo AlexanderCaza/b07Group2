@@ -97,6 +97,15 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.BoxViewHolder>{
         return false;
     }
 
+    public ItemCollection getFirstClickedItem(){
+        for (int i = 0; i < clickedPositions.length; i++){
+            if (clickedPositions[i]){
+                return boxList.get(currentPage * pageSize + i);
+            }
+        }
+        return null;
+    }
+
     static class BoxViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
         TextView lotNumberTextView;

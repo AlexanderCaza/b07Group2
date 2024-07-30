@@ -1,6 +1,8 @@
 package com.b07group2.taamapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,11 +53,22 @@ public abstract class HomeFragment extends Fragment {
         buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //placeholder until i figure out the whole seeing if box is clicked thing
                 if (boxAdapter.checkClick()) {
-                    loadFragment(new BlankFragment());
+                    // Start ItemDetailedView with item lot number
+
+                    Intent intent = new Intent(getActivity(), ItemDetailedView.class);
+                    ItemCollection item = boxAdapter.getFirstClickedItem();
+
+                    if (item != null) {
+                        intent.putExtra("item_lot", item.getLotNumber());
+                    } else {
+                        // Show error message
+                        Log.w("HomeFragment", "No item was clicked");
+                        return;
+                    }
+
+                    startActivity(intent);
                 }
-                //put fragment name here instead of BlankFragment
             }
         });
 
