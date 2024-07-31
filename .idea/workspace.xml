@@ -38,7 +38,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5605591b-1c2b-4c67-9b35-2a846798bb90" name="Changes" comment="feat: added functional home screen">
+    <list default="true" id="5605591b-1c2b-4c67-9b35-2a846798bb90" name="Changes" comment="feat (tests): added unit tests for compatible BoxAdapter methods&#10;fix: fixed bug of onBackPressed override where pressing back would crash the app">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_home_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_home_fragment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/fragment_blank.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/fragment_blank.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -99,9 +103,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="resourceFile" />
         <option value="layoutResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -126,7 +130,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="_Designer_Tab" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -141,24 +145,29 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Android App.B07_Demo_Summer_2024.app.main.executor": "Run",
     "Android App.B07_Demo_Summer_2024.app.unitTest.executor": "Run",
     "Android App.app.executor": "Run",
+    "Gradle.BoxAdapterTest.executor": "Run",
+    "Gradle.BoxAdapterUnitTest (1).executor": "Run",
+    "Gradle.BoxAdapterUnitTest.executor": "Run",
+    "Gradle.BoxAdapterUnitTest.testSetBoxList.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
-    "git-widget-placeholder": "feature/SCRUM-3-7/homepage",
+    "git-widget-placeholder": "#2 on feature/SCRUM-3-7/homepage",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/adamc/AndroidStudioProjects/b07Group2/TAAMApp/settings.gradle.kts",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "SDK Location",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "fileTemplates"
   }
 }]]></component>
-  <component name="RunManager" selected="Android App.B07_Demo_Summer_2024.app.unitTest">
+  <component name="RunManager" selected="Android App.B07_Demo_Summer_2024.app.main">
     <configuration name="B07_Demo_Summer_2024.app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="B07_Demo_Summer_2024.app" />
       <option name="DEPLOY" value="true" />
@@ -292,7 +301,7 @@
       </method>
     </configuration>
     <configuration name="B07_Demo_Summer_2024.app.main" type="AndroidRunConfigurationType" factoryName="Android App">
-      <module name="B07_Demo_Summer_2024.app.main" />
+      <module name="TAAM_App.app.main" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -358,7 +367,7 @@
       </method>
     </configuration>
     <configuration name="B07_Demo_Summer_2024.app.unitTest" type="AndroidRunConfigurationType" factoryName="Android App">
-      <module name="TAAM_App.app.main" />
+      <module name="B07_Demo_Summer_2024.app.unitTest" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -489,13 +498,121 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BoxAdapterTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/TAAMApp" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;BoxAdapterTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="BoxAdapterUnitTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/TAAMApp" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;BoxAdapterUnitTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="BoxAdapterUnitTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/TAAMApp" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;com.b07group2.taamapp.BoxAdapterUnitTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="BoxAdapterUnitTest.testSetBoxList" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/TAAMApp" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--scan" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":app:testDebugUnitTest" />
+            <option value="--tests" />
+            <option value="&quot;com.b07group2.taamapp.BoxAdapterUnitTest.testSetBoxList&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Android App.app" />
       <item itemvalue="Android App.B07_Demo_Summer_2024.app" />
       <item itemvalue="Android App.B07_Demo_Summer_2024.app.androidTest" />
       <item itemvalue="Android App.B07_Demo_Summer_2024.app.main" />
       <item itemvalue="Android App.B07_Demo_Summer_2024.app.unitTest" />
+      <item itemvalue="Gradle.BoxAdapterTest" />
+      <item itemvalue="Gradle.BoxAdapterUnitTest (1)" />
+      <item itemvalue="Gradle.BoxAdapterUnitTest.testSetBoxList" />
+      <item itemvalue="Gradle.BoxAdapterUnitTest" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.BoxAdapterUnitTest" />
+        <item itemvalue="Gradle.BoxAdapterUnitTest (1)" />
+        <item itemvalue="Gradle.BoxAdapterTest" />
+        <item itemvalue="Gradle.BoxAdapterUnitTest.testSetBoxList" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -522,11 +639,57 @@
       <option name="project" value="LOCAL" />
       <updated>1721002280093</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat: added functional home screen">
+      <option name="closed" value="true" />
+      <created>1721002342779</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1721002342779</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat (tests): added unit tests for compatible BoxAdapter methods&#10;fix: fixed bug of onBackPressed override where pressing back would crash the app">
+      <option name="closed" value="true" />
+      <created>1721345272425</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1721345272425</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat (tests): added unit tests for compatible BoxAdapter methods&#10;fix: fixed bug of onBackPressed override where pressing back would crash the app">
+      <option name="closed" value="true" />
+      <created>1721345379424</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1721345379424</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: added functional home screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: added functional home screen" />
+    <MESSAGE value="feat (tests): added unit tests for compatible BoxAdapter methods&#10;fix: fixed bug of onBackPressed override where pressing back would crash the app" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat (tests): added unit tests for compatible BoxAdapter methods&#10;fix: fixed bug of onBackPressed override where pressing back would crash the app" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

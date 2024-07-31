@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment(), R.id.fragment_home_container);
+            loadFragment(new HomeUserFragment(), R.id.fragment_home_container);
         }
     }
 
@@ -30,9 +30,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        HomeFragment homeFragment = (HomeFragment) fragmentManager.findFragmentById(R.id.fragment_home_container);
-        if (homeFragment != null && homeFragment.isVisible() && homeFragment.canGoBack()) {
-            homeFragment.goToPreviousPage();
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_home_container);
+
+        if (currentFragment instanceof HomeFragment) {
+            HomeFragment homeFragment = (HomeFragment) currentFragment;
+            if (homeFragment.isVisible() && homeFragment.canGoBack()) {
+                homeFragment.goToPreviousPage();
+            } else {
+                super.onBackPressed();
+            }
         } else {
             super.onBackPressed();
         }
