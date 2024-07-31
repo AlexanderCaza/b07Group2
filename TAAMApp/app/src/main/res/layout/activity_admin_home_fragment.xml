@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linearLayoutTop"
             android:layout_width="match_parent"
             android:layout_height="63dp"
             android:gravity="center"
@@ -99,7 +99,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linearLayoutBotton"
             android:layout_width="match_parent"
             android:layout_height="63dp"
             android:layout_marginTop="-16dp"
