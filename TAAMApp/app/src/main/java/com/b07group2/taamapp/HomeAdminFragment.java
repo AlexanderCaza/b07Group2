@@ -27,9 +27,27 @@ public class HomeAdminFragment extends HomeFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_admin_home_fragment, container, false);
 
-        Button buttonAdmin = view.findViewById(R.id.buttonReport);
+        Button buttonReport = view.findViewById(R.id.buttonReport);
+        Button buttonAdd = view.findViewById(R.id.buttonAdd);
+        Button buttonRemove = view.findViewById(R.id.buttonRemove);
 
-        buttonAdmin.setOnClickListener(new View.OnClickListener() {
+        buttonReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new BlankFragment());
+                //put fragment name here instead of BlankFragment
+            }
+        });
+
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(new BlankFragment());
+                //put fragment name here instead of BlankFragment
+            }
+        });
+
+        buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadFragment(new BlankFragment());
