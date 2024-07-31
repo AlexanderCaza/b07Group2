@@ -5,7 +5,9 @@ import android.net.Uri;
 import com.google.firebase.database.DataSnapshot;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.List;
 
 public class ItemCollection {
 
@@ -14,16 +16,28 @@ public class ItemCollection {
     private String category;
     private String period;
     private String description;
-    private Uri[] media;
-    public static String[] validCategories = {"Jade", "Paintings", "Calligraphy", "Rubbings",
+    private List<Uri> media;
+    final public static String[] validCategories = {"Jade", "Paintings", "Calligraphy", "Rubbings",
             "Bronze", "Brass and Copper", "Gold and Silvers", "Lacquer", "Enamels"};
-    public static String[] validPeriods = {"Xia", "Shang", "Zhou", "Chuanqiu", "Zhanggou", "Qin",
+    final public static String[] validPeriods = {"Xia", "Shang", "Zhou", "Chuanqiu", "Zhanggou", "Qin",
             "hang", "Shangou", "Ji", "South and North", "Shui", "Tang", "Liao", "Song",
             "Jin", "Yuan", "Ming", "Qing", "Modern"};
 
     // Special constructor required by Firebase
     public ItemCollection() {
 
+    }
+
+    public ItemCollection(int lotNumber, String name, String category, String period, String description,
+                          List<String> media) {
+        this.lotNumber = lotNumber;
+        this.name = name;
+        this.category = category;
+        this.period = period;
+        this.description = description;
+        for (String inputMedia : media) {
+            this.media.add(Uri.parse(inputMedia));
+        }
     }
 
     // Constructor with media field
@@ -33,9 +47,8 @@ public class ItemCollection {
         this.category = category;
         this.period = period;
         this.description = description;
-        this.media = new Uri[media.length];
-        for (int i = 0; i < media.length; i++) {
-            this.media[i] = Uri.parse(media[i]);
+        for (String inputMedia : media) {
+            this.media.add(Uri.parse(inputMedia));
         }
     }
 
@@ -90,11 +103,15 @@ public class ItemCollection {
     }
 
     public Uri[] getMedia() {
+        Uri[] media = new Uri[this.media.size()];
+        for (int i = 0; i < this.media.size(); i++) {
+            media[i] = this.media.get(i);
+        }
         return media;
     }
 
     public void setMedia(Uri[] media) {
-        this.media = media;
+        this.media = Arrays.asList(media);
     }
 
 
