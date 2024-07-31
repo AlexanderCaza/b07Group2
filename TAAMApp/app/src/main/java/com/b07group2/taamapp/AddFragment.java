@@ -101,7 +101,9 @@ public class AddFragment extends Fragment {
             public void onClick(View v) {
                 if(!verifyAllInput())
                     return;
-                uploadData();
+                if(uploadData()) {
+                    resetInput();
+                }
 
             }
         });
@@ -110,9 +112,9 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d("Upload Image Button", "Functioning");
-                String[] mimeTypes = {"image/jpeg", "image/png"};
+                String[] mimeTypes = {"image/*", "video/*"};
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
+                intent.setType("*/*");
                 intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 try {
@@ -163,7 +165,7 @@ public class AddFragment extends Fragment {
         return fileName;
     }
 
-    private void uploadData() {
+    private boolean uploadData() {
         int lotNumber = Integer.parseInt(String.valueOf(lotInput.getEditText().getText()));
         String name = String.valueOf(nameInput.getEditText().getText());
         String category = String.valueOf(categoryInput.getEditText().getText());
@@ -174,8 +176,18 @@ public class AddFragment extends Fragment {
         ItemCollection item = new ItemCollection(lotNumber, name, category, period, description, tempUriString);
 
 //        database.addItemCollection(item);
+        return true;
     }
 
+    private void resetInput() {
+        lotInput.getEditText().setText(null);
+        nameInput.getEditText().setText(null);
+        categoryInput.getEditText().setText(null);
+        periodInput.getEditText().setText(null);
+        descriptionInput.setText(null);
+        uriData = null;
+        uploadImageButton.setText("Upload Image");
+    }
     private boolean verifyAllInput() {
         boolean verified = true;
         if(!verifyLotInput())
