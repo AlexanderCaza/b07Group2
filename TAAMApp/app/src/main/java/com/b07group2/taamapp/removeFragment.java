@@ -22,7 +22,7 @@ public class removeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_home_container, new HomeFragment());
+                transaction.replace(R.id.fragment_home_container, new HomeUserFragment());
                 transaction.addToBackStack(null); // Add the transaction to the back stack
                 transaction.commit();
             }
