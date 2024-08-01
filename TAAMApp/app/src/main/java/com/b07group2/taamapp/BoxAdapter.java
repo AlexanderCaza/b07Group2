@@ -88,13 +88,14 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.BoxViewHolder>{
         return Math.min(remainingItems, pageSize);
     }
 
-    public boolean checkClick(){
+    public int clickCount(){
+        int count = 0;
         for (boolean clicked : clickedPositions){
             if (clicked){
-                return true;
+                count++;
             }
         }
-        return false;
+        return count;
     }
 
     public ItemCollection getFirstClickedItem(){

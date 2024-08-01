@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -63,7 +64,12 @@ public abstract class HomeFragment extends Fragment {
                 buttonView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (boxAdapter.checkClick()) {
+                        if (boxAdapter.clickCount() != 1){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setMessage("Select only one item to be viewed!");
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        } else {
                             // Start ItemDetailedView with item lot number
 
                             Intent intent = new Intent(getContext(), ItemDetailedView.class);
