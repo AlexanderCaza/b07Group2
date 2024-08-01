@@ -58,7 +58,7 @@ public abstract class HomeFragment extends Fragment {
                         if (boxAdapter.checkClick()) {
                             // Start ItemDetailedView with item lot number
 
-                            Intent intent = new Intent(getActivity(), ItemDetailedView.class);
+                            Intent intent = new Intent(getContext(), ItemDetailedView.class);
                             ItemCollection item = boxAdapter.getFirstClickedItem();
 
                             if (item != null) {

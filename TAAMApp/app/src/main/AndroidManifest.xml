@@ -23,8 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ItemDetailedView"
-            android:exported="true">
+            android:name="ItemDetailedView">
         </activity>
         <meta-data
             android:name="preloaded_fonts"

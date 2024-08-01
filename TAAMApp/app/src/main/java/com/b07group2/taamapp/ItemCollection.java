@@ -103,6 +103,10 @@ public class ItemCollection {
     }
 
     public Uri[] getMedia() {
+        if (this.media == null) {
+            return new Uri[0];
+        }
+
         Uri[] media = new Uri[this.media.size()];
         for (int i = 0; i < this.media.size(); i++) {
             media[i] = this.media.get(i);
