@@ -28,6 +28,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.io.File;
 
 public class AddFragment extends Fragment {
@@ -39,21 +41,15 @@ public class AddFragment extends Fragment {
     private EditText descriptionInput;
     private Button uploadImageButton;
 
-    private Uri uriData;
+    private ArrayList<Uri> urisData;
 
     private CollectionsDatabase database;
 
-    private static String[] validCategories = {"Jade", "Paintings", "Calligraphy", "Rubbings",
+    private static final String[] validCategories = {"Jade", "Paintings", "Calligraphy", "Rubbings",
             "Bronze", "Brass and Copper", "Gold and Silvers", "Lacquer", "Enamels"};
-    private static String[] validPeriods = {"Xia", "Shang", "Zhou", "Chuanqiu", "Zhanggou", "Qin",
+    private static final String[] validPeriods = {"Xia", "Shang", "Zhou", "Chuanqiu", "Zhanggou", "Qin",
             "hang", "Shangou", "Ji", "South and North", "Shui", "Tang", "Liao", "Song",
             "Jin", "Yuan", "Ming", "Qing", "Modern"};
-
-    private AutoCompleteTextView autoCompleteCategories;
-    private ArrayAdapter<String> adapterCategories;
-
-    private AutoCompleteTextView autoCompletePeriods;
-    private ArrayAdapter<String> adapterPeriods;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,8 +58,8 @@ public class AddFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
-        autoCompleteCategories = view.findViewById(R.id.autoCompleteCategory);
-        adapterCategories = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_item, validCategories);
+        AutoCompleteTextView autoCompleteCategories = view.findViewById(R.id.autoCompleteCategory);
+        ArrayAdapter<String> adapterCategories = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_item, validCategories);
         autoCompleteCategories.setAdapter(adapterCategories);
         autoCompleteCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -73,8 +69,8 @@ public class AddFragment extends Fragment {
             }
         });
 
-        autoCompletePeriods = view.findViewById(R.id.autoCompletePeriod);
-        adapterPeriods = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_item, validPeriods);
+        AutoCompleteTextView autoCompletePeriods = view.findViewById(R.id.autoCompletePeriod);
+        ArrayAdapter<String> adapterPeriods = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_item, validPeriods);
         autoCompletePeriods.setAdapter(adapterPeriods);
         autoCompletePeriods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,6 +112,7 @@ public class AddFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("*/*");
                 intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 try {
                     someActivityResultLauncher.launch(intent);
@@ -133,49 +130,35 @@ public class AddFragment extends Fragment {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        Uri uri = result.getData().getData();
-                        String fileName = getFileName(uri);
-                        uriData = uri;
-                        uploadImageButton.setText(fileName);
+                        Intent data = result.getData();
+                        intentDataToUris(data);
                     }
                 }
             });
-
-
-    @SuppressLint("Range")
-    private String getFileName(Uri uri) {
-        String fileName = "";
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    fileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
-            }
+    private void intentDataToUris(Intent data) {
+        urisData = new ArrayList<Uri>();
+        ClipData clipData = data.getClipData();
+        for(int i  = 0 ; i < clipData.getItemCount(); i++) {
+            urisData.add(clipData.getItemAt(i).getUri());
         }
-        if (fileName == null) {
-            fileName = uri.getPath();
-            int cut = fileName.lastIndexOf('/');
-            if (cut != -1) {
-                fileName = fileName.substring(cut + 1);
-            }
-        }
-        return fileName;
     }
-
     private boolean uploadData() {
         int lotNumber = Integer.parseInt(String.valueOf(lotInput.getEditText().getText()));
         String name = String.valueOf(nameInput.getEditText().getText());
         String category = String.valueOf(categoryInput.getEditText().getText());
         String period = String.valueOf(periodInput.getEditText().getText());
         String description = String.valueOf(descriptionInput.getText());
-        String tempUriString[] = {uriData.toString()};
+//        String[] urisStringData = new String[urisData.size()];
+        String[] urisStringData = new String[0];
+        for(int i = 0; i < urisData.size(); i++) {
+            urisStringData[i] = urisData.get(i).toString();
+        }
 
-        ItemCollection item = new ItemCollection(lotNumber, name, category, period, description, tempUriString);
+        ItemCollection item = new ItemCollection(lotNumber, name, category, period, description, urisStringData);
+        System.out.println(item.getCategory() +  item.getName() +  item.getLotNumber() + item.getPeriod());
+        Log.d("Data Upload", "success");
 
-//        database.addItemCollection(item);
+        database.addItemCollection(item);
         return true;
     }
 
@@ -185,7 +168,7 @@ public class AddFragment extends Fragment {
         categoryInput.getEditText().setText(null);
         periodInput.getEditText().setText(null);
         descriptionInput.setText(null);
-        uriData = null;
+        urisData = null;
         uploadImageButton.setText("Upload Image");
     }
     private boolean verifyAllInput() {
@@ -238,7 +221,7 @@ public class AddFragment extends Fragment {
     }
 
     private boolean verifyImageInput() {
-        if(uriData != null) {
+        if(urisData != null) {
             return true;
         }
         return false;
