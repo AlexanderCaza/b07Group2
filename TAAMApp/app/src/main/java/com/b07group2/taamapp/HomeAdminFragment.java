@@ -15,17 +15,12 @@ import java.util.List;
 
 public class HomeAdminFragment extends HomeFragment {
 
-    private RecyclerView recyclerView;
-    private BoxAdapter boxAdapter;
-    private int currentPage = 0;
-    private static final int PAGE_SIZE = 5; //boxes per page
-    private List<String> boxList;
-    private List<List<String>> boxListHistory = new ArrayList<>(); //keep history of previous pages
-
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_admin_home_fragment, container, false);
+
+        admin = true;
+
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
         Button buttonReport = view.findViewById(R.id.buttonReport);
         Button buttonAdd = view.findViewById(R.id.buttonAdd);
@@ -55,6 +50,6 @@ public class HomeAdminFragment extends HomeFragment {
             }
         });
 
-        return  super.onCreateView(inflater, container, savedInstanceState, view);
+        return view;
     }
 }

@@ -26,12 +26,20 @@ public abstract class HomeFragment extends Fragment {
     private static final int PAGE_SIZE = 5; //boxes per page
     private CollectionsDatabase collectionsDatabase;
     private List<ItemCollection> itemCollections;
+    protected boolean admin = false;
 
     @Nullable
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
+        View view = null;
+
+        if(admin) {
+            view = inflater.inflate(R.layout.activity_admin_home_fragment, container, false);
+        }
+        else {
+            view = inflater.inflate(R.layout.activity_home_fragment, container, false);
+        }
 
         Button buttonView = view.findViewById(R.id.buttonView);
         Button buttonSearch = view.findViewById(R.id.buttonSearch);
