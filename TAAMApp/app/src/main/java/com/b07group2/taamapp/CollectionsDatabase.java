@@ -28,7 +28,7 @@ public class CollectionsDatabase {
         storage = FirebaseStorage.getInstance("gs://cscb07-70b84.appspot.com");
         storageRef = storage.getReference();
         dbRef = FirebaseDatabase.getInstance("https://cscb07-70b84-default-rtdb.firebaseio.com/").
-                getReference();
+                getReference("collections");
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

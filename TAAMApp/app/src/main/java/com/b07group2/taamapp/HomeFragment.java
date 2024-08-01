@@ -38,8 +38,6 @@ public abstract class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // collectionsDatabase = new CollectionsDatabase();
-        // itemCollections = collectionsDatabase.getItemCollections();
         CollectionsDatabase.getCollections(new CollectionsCallback() {
             @Override
             public void onCallback(ArrayList<ItemCollection> collectionsList) {
@@ -83,43 +81,6 @@ public abstract class HomeFragment extends Fragment {
                 });
             }
         });
-//        if (itemCollections == null) {
-//            itemCollections = new ArrayList<>();
-//        }
-//
-//        boxAdapter = new BoxAdapter(itemCollections);
-//        recyclerView.setAdapter(boxAdapter);
-//
-//
-//        buttonView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //placeholder until i figure out the whole seeing if box is clicked thing
-//                if (boxAdapter.checkClick()) {
-//                    loadFragment(new BlankFragment());
-//                }
-//                //put fragment name here instead of BlankFragment
-//            }
-//        });
-//
-//        buttonSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadFragment(new BlankFragment());
-//                //put fragment name here instead of BlankFragment
-//            }
-//        });
-//
-//
-//        buttonNext.setOnClickListener(v -> {
-//            int maxPage = (int) Math.ceil((double) itemCollections.size() / PAGE_SIZE);
-//            if (currentPage < maxPage - 1) {
-//                currentPage++;
-//                List<ItemCollection> nextPageItems = getCurrentPageItems();
-//                boxAdapter.setBoxList(nextPageItems);
-//                recyclerView.scrollToPosition(0);
-//            }
-//        });
 
         return view;
     }
