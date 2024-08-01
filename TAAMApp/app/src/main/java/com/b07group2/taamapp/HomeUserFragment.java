@@ -1,6 +1,7 @@
 package com.b07group2.taamapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,28 +16,24 @@ import java.util.List;
 
 public class HomeUserFragment extends HomeFragment {
 
-    private RecyclerView recyclerView;
-    private BoxAdapter boxAdapter;
-    private int currentPage = 0;
-    private static final int PAGE_SIZE = 5; //boxes per page
-    private List<String> boxList;
-    private List<List<String>> boxListHistory = new ArrayList<>(); //keep history of previous pages
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
+        admin = false;
+
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
         Button buttonAdmin = view.findViewById(R.id.buttonReport);
 
         buttonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Switching to fragment","home admin");
                 loadFragment(new HomeAdminFragment());
                 //put fragment name here instead of BlankFragment
             }
         });
 
-        return  super.onCreateView(inflater, container, savedInstanceState, view);
+        return view;
     }
 }
