@@ -8,21 +8,30 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
+import java.util.ArrayList;
 
 public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.BoxViewHolder>{
 
-    private List<String> boxList;
-    private int pageSize = 5;
+    private List<ItemCollection> boxList;
+    private final int pageSize = 5;
     private int currentPage = 0;
     private boolean[] clickedPositions;
 
-    public BoxAdapter(List<String> boxList) {
+    public BoxAdapter(List<ItemCollection> boxList) {
+        if (boxList == null) {
+            boxList = new ArrayList<>();
+        }
         this.boxList = boxList;
         this.clickedPositions = new boolean[boxList.size()];
     }
 
-    public void setBoxList(List<String> boxList){
+    public void setBoxList(List<ItemCollection> boxList){
+        if (boxList == null) {
+            throw new IllegalArgumentException("boxList cannot be null");
+        }
         this.boxList = boxList;
         this.clickedPositions = new boolean[boxList.size()];
         notifyDataSetChanged();
@@ -37,7 +46,7 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.BoxViewHolder>{
         return currentPage;
     }
 
-    public List<String> getBoxList() {
+    public List<ItemCollection> getBoxList() {
         return boxList;
     }
 
@@ -50,24 +59,23 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.BoxViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull BoxViewHolder holder, int position) {
-        // set sample data
-
         int index = currentPage * pageSize + position;
         if (index < boxList.size()){
-            holder.textView.setText(boxList.get(index));
+            ItemCollection item = boxList.get(index);
+            holder.nameTextView.setText(item.getName());
+            holder.lotNumberTextView.setText("Lot Number: " + item.getLotNumber());
+            holder.categoryTextView.setText("Category: " + item.getCategory());
+            holder.periodTextView.setText("Period: " + item.getPeriod());
             holder.itemView.setVisibility(View.VISIBLE);
 
             if (clickedPositions[position]) {
-                // item clicked
                 holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.blue));
             } else {
-                // item not clicked
                 holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(android.R.color.transparent));
             }
             holder.itemView.setOnClickListener(v -> {
-                // Toggle the clicked status
                 clickedPositions[position] = !clickedPositions[position];
-                notifyDataSetChanged(); // refresh item view
+                notifyDataSetChanged();
             });
         } else {
             holder.itemView.setVisibility(View.GONE);
@@ -90,11 +98,17 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.BoxViewHolder>{
     }
 
     static class BoxViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView nameTextView;
+        TextView lotNumberTextView;
+        TextView categoryTextView;
+        TextView periodTextView;
 
         BoxViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.mockBoxText);
+            nameTextView = itemView.findViewById(R.id.nameTextView);
+            lotNumberTextView = itemView.findViewById(R.id.lotNumberTextView);
+            categoryTextView = itemView.findViewById(R.id.categoryTextView);
+            periodTextView = itemView.findViewById(R.id.periodTextView);
         }
     }
 }
