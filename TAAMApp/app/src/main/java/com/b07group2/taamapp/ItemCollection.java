@@ -27,7 +27,8 @@ public class ItemCollection {
     }
 
     // Constructor with media field
-    public ItemCollection(int lotNumber, String name, String category, String period, String description, String[] media) {
+    public ItemCollection(int lotNumber, String name, String category, String period,
+                          String description, String[] media) {
         this.lotNumber = lotNumber;
         this.name = name;
         this.category = category;
@@ -40,12 +41,15 @@ public class ItemCollection {
     }
 
     // Constructor without media field
-    public ItemCollection(int lotNumber, String name, String category, String period, String description) {
+    public ItemCollection(int lotNumber, String name, String category, String period,
+                          String description) {
         this.lotNumber = lotNumber;
         this.name = name;
+        if (this.name == null || this.name.isEmpty()) this.name = " ";
         this.category = category;
         this.period = period;
         this.description = description;
+        if (this.description == null || || this.description.isEmpty()) this.description = " ";
     }
 
     // Getters and setters
