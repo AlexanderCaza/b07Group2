@@ -95,6 +95,7 @@ public class AddFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("clicked on submit", "Clicked");
                 if(!verifyAllInput())
                     return;
                 if(uploadData()) {
@@ -132,6 +133,7 @@ public class AddFragment extends Fragment {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         intentDataToUris(data);
+                        System.out.println(urisData);
                     }
                 }
             });
@@ -149,7 +151,7 @@ public class AddFragment extends Fragment {
         String period = String.valueOf(periodInput.getEditText().getText());
         String description = String.valueOf(descriptionInput.getText());
 //        String[] urisStringData = new String[urisData.size()];
-        String[] urisStringData = new String[0];
+        String[] urisStringData = new String[1];
         for(int i = 0; i < urisData.size(); i++) {
             urisStringData[i] = urisData.get(i).toString();
         }

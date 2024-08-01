@@ -37,7 +37,7 @@ public class HomeAdminFragment extends HomeFragment {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new BlankFragment());
+                loadFragment(new AddFragment());
                 //put fragment name here instead of BlankFragment
             }
         });
