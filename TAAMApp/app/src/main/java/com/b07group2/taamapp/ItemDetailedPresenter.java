@@ -8,21 +8,16 @@ import java.util.Objects;
 
 public class ItemDetailedPresenter {
     ItemDetailedView view;
-    CollectionsDatabase model;
+    ArrayList<ItemCollection> items;
 
     public ItemDetailedPresenter(ItemDetailedView view) {
         this.view = view;
-        this.model = null;
-    }
-
-    public void connectDatabase(){
-        model = new CollectionsDatabase();
     }
 
     public void setInformation(int item_id) {
         // get the ItemCollection from model as item_id
 
-        ArrayList<ItemCollection> items = model.getItemCollections();
+        CollectionsDatabase.getCollections(collectionsList -> items = collectionsList);
 
         ItemCollection item = null;
         for (ItemCollection i : items) {
@@ -52,29 +47,6 @@ public class ItemDetailedPresenter {
         }
 
         // Show media
-        Uri[] files = item.getMedia();
-        for (Uri file : files) {
-            if (file.toString().endsWith(".jpg") || file.toString().endsWith(".png")) {
-                view.addPicture(new File(Objects.requireNonNull(file.getPath())));
-            } else if (file.toString().endsWith(".mp4")) {
-                view.addVideo(new File(Objects.requireNonNull(file.getPath())));
-            }
-        }
-    }
-
-    public void setInformation(ItemCollection item) {
-        // set the information in the view
-        int lot = item.getLotNumber();
-        String name = item.getName();
-        String category = item.getCategory();
-        String period = item.getPeriod();
-        String description = item.getDescription();
-
-        boolean res =view.setInformation(lot, name, category, period, description);
-        while (!res){
-            res =view.setInformation(lot, name, category, period, description);
-        }
-
         Uri[] files = item.getMedia();
         for (Uri file : files) {
             if (file.toString().endsWith(".jpg") || file.toString().endsWith(".png")) {

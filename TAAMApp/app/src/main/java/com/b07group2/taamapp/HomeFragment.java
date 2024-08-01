@@ -52,27 +52,27 @@ public abstract class HomeFragment extends Fragment {
                 recyclerView.setAdapter(boxAdapter);
 
 
-        buttonView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (boxAdapter.checkClick()) {
-                    // Start ItemDetailedView with item lot number
+                buttonView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (boxAdapter.checkClick()) {
+                            // Start ItemDetailedView with item lot number
 
-                    Intent intent = new Intent(getActivity(), ItemDetailedView.class);
-                    ItemCollection item = boxAdapter.getFirstClickedItem();
+                            Intent intent = new Intent(getActivity(), ItemDetailedView.class);
+                            ItemCollection item = boxAdapter.getFirstClickedItem();
 
-                    if (item != null) {
-                        intent.putExtra("item_lot", item.getLotNumber());
-                    } else {
-                        // Show error message
-                        Log.w("HomeFragment", "No item was clicked");
-                        return;
+                            if (item != null) {
+                                intent.putExtra("item_lot", item.getLotNumber());
+                            } else {
+                                // Show error message
+                                Log.w("HomeFragment", "No item was clicked");
+                                return;
+                            }
+
+                            startActivity(intent);
+                        }
                     }
-
-                    startActivity(intent);
-                }
-            }
-        });
+                });
 
                 buttonSearch.setOnClickListener(new View.OnClickListener() {
                     @Override
