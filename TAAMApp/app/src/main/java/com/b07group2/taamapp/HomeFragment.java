@@ -1,5 +1,6 @@
 package com.b07group2.taamapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -98,13 +101,7 @@ public abstract class HomeFragment extends Fragment {
 
 
                 buttonNext.setOnClickListener(v -> {
-                    int maxPage = (int) Math.ceil((double) itemCollections.size() / PAGE_SIZE);
-                    if (currentPage < maxPage - 1) {
-                        currentPage++;
-                        List<ItemCollection> nextPageItems = getCurrentPageItems();
-                        boxAdapter.setBoxList(nextPageItems);
-                        recyclerView.scrollToPosition(0);
-                    }
+                    goToNextPage();
                 });
             }
         });
@@ -115,11 +112,22 @@ public abstract class HomeFragment extends Fragment {
     public void goToPreviousPage() {
         if (currentPage > 0) {
             currentPage--;
-            List<ItemCollection> previousPageItems = getCurrentPageItems();
-            boxAdapter.setBoxList(previousPageItems);
-            boxAdapter.notifyDataSetChanged();
-            recyclerView.scrollToPosition(0);
+            updateRecyclerView();
         }
+    }
+
+    private void goToNextPage() {
+        int maxPage = (int) Math.ceil((double) itemCollections.size() / PAGE_SIZE);
+        if (currentPage < maxPage - 1) {
+            currentPage++;
+            updateRecyclerView();
+        }
+    }
+
+    private void updateRecyclerView() {
+        boxAdapter.setBoxList(getCurrentPageItems());
+        boxAdapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(0);
     }
 
     public boolean canGoBack() {
@@ -137,5 +145,23 @@ public abstract class HomeFragment extends Fragment {
         int start = currentPage * PAGE_SIZE;
         int end = Math.min(start + PAGE_SIZE, itemCollections.size());
         return new ArrayList<>(itemCollections.subList(start, end));
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (canGoBack()) {
+                    goToPreviousPage();
+                } else {
+                    requireActivity().onBackPressed();
+                }
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 }
