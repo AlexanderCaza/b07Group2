@@ -185,8 +185,6 @@ public class AddFragment extends Fragment {
             verified = false;
         if(!verifyCategoryInput())
             verified = false;
-        if(!verifyImageInput())  // May not need to check in final result
-            verified = false;
         return verified;
 
     }
