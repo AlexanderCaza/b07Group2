@@ -65,8 +65,8 @@ public abstract class SearchQueryFragment extends Fragment implements
                         byte[] data = SerializationUtils.serialize(query);
                         savedInstanceState.putByteArray("searchresults", data);
 
-                loadFragment((new SearchResultsFragment(@NonNull LayoutInflater inflater,
-                        @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View view)));
+                // loadFragment((new SearchResultsFragment(@NonNull LayoutInflater inflater,
+                //        @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View view)));
                 // put search fragment name here instead of BlankFragment
             }
         });

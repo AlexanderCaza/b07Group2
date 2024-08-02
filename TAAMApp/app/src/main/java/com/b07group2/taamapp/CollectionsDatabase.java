@@ -80,7 +80,7 @@ public class CollectionsDatabase {
             if (existing.getLotNumber() == existing.getLotNumber())
                 throw new dbException("Error: Duplicate id!");
         }
-        ArrayList<Uri> cloudMedia = new ArrayList<Uri>();
+        ArrayList<String> cloudMedia = new ArrayList<String>();
         for (Uri mediaFile : toAdd.getMedia()) {
             StorageReference mediaStorageRef = storageRef.child(toAdd.getLotNumber() + mediaFile.getLastPathSegment());
             UploadTask uploadTask = mediaStorageRef.putFile(mediaFile);
@@ -92,7 +92,7 @@ public class CollectionsDatabase {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    cloudMedia.add(taskSnapshot.getStorage().getDownloadUrl().getResult());
+                    cloudMedia.add(String.valueOf(taskSnapshot.getStorage().getDownloadUrl().getResult()));
                 }
             });
         }

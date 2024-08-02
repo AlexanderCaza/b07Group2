@@ -48,8 +48,8 @@ public abstract class SearchResultsFragment extends Fragment {
         private List<List<String>> boxListHistory = new ArrayList<>(); //keep history of previous pages
 
         @Nullable
-
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View view) {
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                                 @Nullable Bundle savedInstanceState, View view) {
 
             Button buttonView = view.findViewById(R.id.buttonView);
             Button buttonNext = view.findViewById(R.id.buttonNext);
@@ -61,6 +61,7 @@ public abstract class SearchResultsFragment extends Fragment {
 
             ArrayList<ItemCollection> collectionsResults = query.getResults();
 
+            /*
             boxList = new ArrayList<>();
             for (int i = 1; i <= 30; i++) {
                 boxList.add("Box " + i);
@@ -98,9 +99,10 @@ public abstract class SearchResultsFragment extends Fragment {
 
             boxListHistory.add(new ArrayList<>(boxList));
 
+             */
             return view;
         }
-
+        /*
         public void goToPreviousPage() {
             if (currentPage > 0) {
                 currentPage--;
@@ -127,6 +129,6 @@ public abstract class SearchResultsFragment extends Fragment {
             int end = Math.min(start + PAGE_SIZE, boxList.size());
             return new ArrayList<>(boxList.subList(start, end));
         }
-    }
-
+         */
 }
+
