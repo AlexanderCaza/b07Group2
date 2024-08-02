@@ -29,7 +29,7 @@ public class HomeUserFragment extends HomeFragment {
             @Override
             public void onClick(View v) {
                 Log.d("Switching to fragment","home admin");
-                loadFragment(new HomeAdminFragment());
+                loadFragment(new AdminLoginFragment());
                 //put fragment name here instead of BlankFragment
             }
         });
