@@ -13,6 +13,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -76,15 +77,11 @@ public class CollectionsDatabase {
 
     public void addItemCollection(ItemCollection toAdd) throws dbException {
         for (ItemCollection existing : itemCollections) {
-            if (existing.getLotNumber() == existing.getLotNumber()) throw new dbException("Error: Duplicate id!");
+            if (existing.getLotNumber() == existing.getLotNumber())
+                throw new dbException("Error: Duplicate id!");
         }
-        Map<String, Object> toAddMap = new HashMap<>();
-        toAddMap.put("lotNumber", toAdd.getLotNumber());
-        toAddMap.put("name", toAdd.getName());
-        toAddMap.put("category", toAdd.getCategory());
-        toAddMap.put("period", toAdd.getPeriod());
         ArrayList<Uri> cloudMedia = new ArrayList<Uri>();
-        for (Uri mediaFile: toAdd.getMedia()) {
+        for (Uri mediaFile : toAdd.getMedia()) {
             StorageReference mediaStorageRef = storageRef.child(toAdd.getLotNumber() + mediaFile.getLastPathSegment());
             UploadTask uploadTask = mediaStorageRef.putFile(mediaFile);
             uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -99,8 +96,9 @@ public class CollectionsDatabase {
                 }
             });
         }
-        toAddMap.put("media", cloudMedia);
-        dbRef.child(Integer.toString(toAdd.getLotNumber())).setValue(toAddMap)
+        ItemCollection newItem = new ItemCollection(toAdd.getLotNumber(), toAdd.getName(),
+                toAdd.getCategory(), toAdd.getPeriod(), toAdd.getDescription(), cloudMedia);
+        dbRef.child(Integer.toString(toAdd.getLotNumber())).setValue(newItem)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -117,6 +115,39 @@ public class CollectionsDatabase {
 
     public ArrayList<ItemCollection> getItemCollections() {
         return itemCollections;
+    }
+
+    public ArrayList<ItemCollection> search(String lotNumber, String name, String category,
+                                            String period, String description, String hasMedia) {
+        ArrayList<ItemCollection> results = new ArrayList<>();
+        for (ItemCollection collection: itemCollections) {
+            if (!lotNumber.isEmpty() &&
+                    !Integer.toString(collection.getLotNumber()).equals(lotNumber)) {
+                continue;
+            }
+            else if (!name.isEmpty() &&
+                    !collection.getName().contains(name)) {
+                continue;
+            }
+            else if (!category.isEmpty() &&
+                    !collection.getCategory().equals(category)) {
+                continue;
+            }
+            else if (!period.isEmpty() &&
+                    !collection.getPeriod().equals(period)) {
+                continue;
+            }
+            else if (!description.isEmpty() &&
+                        !collection.getDescription().contains(description)) {
+                    continue;
+            }
+            else if (!hasMedia.isEmpty() &&
+                    collection.getMedia().length == 0) {
+                continue;
+            }
+            results.add(collection);
+        }
+        return results;
     }
 
     public void deleteItemCollection(ItemCollection collectionToDelete) {

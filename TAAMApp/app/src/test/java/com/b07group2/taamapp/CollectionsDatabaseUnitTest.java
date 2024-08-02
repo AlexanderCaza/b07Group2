@@ -1,17 +1,24 @@
 // CollectionsDatabase Class Unit Tests - Cannot run without fully compiled app, leaving in commit
 // in case they can be converted to tests that can run. Remove before full release.
+/*
+package com.b07group2.taamapp;
 
-/* package com.b07group2.taamapp;
-
+import static android.os.Process.myPid;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
+import org.mockito.Mock;
 
 public class CollectionsDatabaseUnitTest {
 
+    @Mock
+    android.os.Process process;
+
     @Test
     public void addItemCollectionIsCorrect() {
+        when(process.myPid()).thenReturn(1);
         CollectionsDatabase db = new CollectionsDatabase();
         ItemCollection testCollection = new ItemCollection(10002, "Teapot",
                 "Enamels", "Shang", "A teapot.");
@@ -21,6 +28,7 @@ public class CollectionsDatabaseUnitTest {
 
     @Test
     public void deleteItemCollectionIsCorrect() {
+        when(process.myPid()).thenReturn(1);
         CollectionsDatabase db = new CollectionsDatabase();
         String[] mediaArray = {"https://www.google.com"};
         ItemCollection testCollection = new ItemCollection(10007, "Teapot",
@@ -30,5 +38,4 @@ public class CollectionsDatabaseUnitTest {
         assertFalse(db.getItemCollections().contains(testCollection));
     }
 }
-
 */

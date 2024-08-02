@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.gridlayout)
     implementation(libs.legacy.support.v4)
     implementation(libs.recyclerview)
+    implementation("org.apache.commons:commons-lang3:3.15.0")
     testImplementation(libs.junit)
     testImplementation("org.mockito:mockito-all:1.10.19")
     testImplementation(libs.mockito.core)
