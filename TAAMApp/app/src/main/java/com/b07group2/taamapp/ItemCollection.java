@@ -62,7 +62,7 @@ public class ItemCollection {
         this.category = category;
         this.period = period;
         this.description = description;
-        if (this.description == null || || this.description.isEmpty()) this.description = " ";
+        if (this.description == null || this.description.isEmpty()) this.description = " ";
     }
 
     // Getters and setters
