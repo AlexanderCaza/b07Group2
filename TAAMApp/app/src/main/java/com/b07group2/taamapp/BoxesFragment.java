@@ -13,20 +13,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoxesFragment extends Fragment {
+
+    private CollectionsDatabase collectionsDatabase;
+    private BoxAdapter boxAdapter;
+    private RecyclerView recyclerView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_boxes, container, false);
 
-        List<String> boxList = new ArrayList<>();
-        for (int i = 1; i <= 30; i++) {
-            boxList.add("Box " + i);
-        }
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new BoxAdapter(boxList));
+        boxAdapter= new BoxAdapter(new ArrayList<>());
+        recyclerView.setAdapter(boxAdapter);
+
+        collectionsDatabase = new CollectionsDatabase();
+        fetchCollectionsData();
 
         return view;
+    }
+
+    private void fetchCollectionsData(){
+        List<ItemCollection> itemCollections = collectionsDatabase.getItemCollections();
+        if (itemCollections != null){
+            boxAdapter.setBoxList(itemCollections);
+        }
     }
 }

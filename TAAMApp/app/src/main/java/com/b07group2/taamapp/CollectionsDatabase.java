@@ -19,19 +19,42 @@ import java.util.HashMap;
 
 public class CollectionsDatabase {
     private static final String TAG = "TAAM App";
-    private DatabaseReference dbRef;
-    private ArrayList<ItemCollection> itemCollections;
-    private ValueEventListener dbListener;
-    private FirebaseStorage storage;
-    private StorageReference storageRef;
+    private static DatabaseReference dbRef;
+    private static ArrayList<ItemCollection> itemCollections;
+    private static ValueEventListener dbListener;
+    private static FirebaseStorage storage;
+    private static StorageReference storageRef;
 
-    public CollectionsDatabase() {
-        this.storage = FirebaseStorage.getInstance();
-        // DEBUG
-        System.out.println("DB Data Changed");
-        this.storageRef = storage.getReference();
-        this.dbRef = FirebaseDatabase.getInstance().
+    public static void getCollections(CollectionsCallback callback) {
+        storage = FirebaseStorage.getInstance("gs://cscb07-70b84.appspot.com");
+        storageRef = storage.getReference();
+        dbRef = FirebaseDatabase.getInstance("https://cscb07-70b84-default-rtdb.firebaseio.com/").
                 getReference("collections");
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.i("demo", "data changed");
+                itemCollections = new ArrayList<ItemCollection>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    itemCollections.add(child.getValue(ItemCollection.class));
+                }
+                callback.onCallback(itemCollections);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("warning", "loadPost:onCancelled",
+                        databaseError.toException());
+            }
+        });
+        // dbRef.addValueEventListener(dbListener);
+    }
+
+    /*public CollectionsDatabase() {
+        this.storage = FirebaseStorage.getInstance("gs://cscb07-70b84.appspot.com");
+        this.storageRef = storage.getReference();
+        this.dbRef = FirebaseDatabase.getInstance("https://cscb07-70b84-default-rtdb.firebaseio.com/").
+                getReference();
         this.dbListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -50,6 +73,7 @@ public class CollectionsDatabase {
         };
         dbRef.addValueEventListener(this.dbListener);
     }
+*/
 
     public void addItemCollection(ItemCollection toAdd) throws dbException {
         for (ItemCollection existing : itemCollections) {
