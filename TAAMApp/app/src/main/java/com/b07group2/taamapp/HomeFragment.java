@@ -1,12 +1,15 @@
 package com.b07group2.taamapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,61 +25,89 @@ public abstract class HomeFragment extends Fragment {
     private BoxAdapter boxAdapter;
     private int currentPage = 0;
     private static final int PAGE_SIZE = 5; //boxes per page
-    private List<String> boxList;
-    private List<List<String>> boxListHistory = new ArrayList<>(); //keep history of previous pages
+    private CollectionsDatabase collectionsDatabase;
+    private List<ItemCollection> itemCollections;
+    protected boolean admin = false;
 
     @Nullable
 
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View view) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = null;
+
+        if(admin) {
+            view = inflater.inflate(R.layout.activity_admin_home_fragment, container, false);
+        }
+        else {
+            view = inflater.inflate(R.layout.activity_home_fragment, container, false);
+        }
 
         Button buttonView = view.findViewById(R.id.buttonView);
         Button buttonSearch = view.findViewById(R.id.buttonSearch);
         Button buttonNext = view.findViewById(R.id.buttonNext);
 
-        boxList = new ArrayList<>();
-        for (int i = 1; i <= 30; i++) {
-            boxList.add("Box " + i);
-        }
-
-        int maxPage = (int) Math.ceil((double) boxList.size() / PAGE_SIZE);
-
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        boxAdapter = new BoxAdapter(boxList);
-        recyclerView.setAdapter(boxAdapter);
-
-        buttonView.setOnClickListener(new View.OnClickListener() {
+        CollectionsDatabase.getCollections(new CollectionsCallback() {
             @Override
-            public void onClick(View v) {
-                //placeholder until i figure out the whole seeing if box is clicked thing
-                if (boxAdapter.checkClick()) {
-                    loadFragment(new BlankFragment());
+            public void onCallback(ArrayList<ItemCollection> collectionsList) {
+                itemCollections = collectionsList;
+                if (itemCollections == null) {
+                    itemCollections = new ArrayList<>();
                 }
-                //put fragment name here instead of BlankFragment
+
+                boxAdapter = new BoxAdapter(itemCollections);
+                recyclerView.setAdapter(boxAdapter);
+
+
+                buttonView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (boxAdapter.clickCount() != 1){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setMessage("Select only one item to be viewed!");
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        } else {
+                            // Start ItemDetailedView with item lot number
+
+                            Intent intent = new Intent(getContext(), ItemDetailedView.class);
+                            ItemCollection item = boxAdapter.getFirstClickedItem();
+
+                            if (item != null) {
+                                intent.putExtra("item_lot", item.getLotNumber());
+                            } else {
+                                // Show error message
+                                Log.w("HomeFragment", "No item was clicked");
+                                return;
+                            }
+
+                            startActivity(intent);
+                        }
+                    }
+                });
+
+                buttonSearch.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loadFragment(new BlankFragment());
+                        //put fragment name here instead of BlankFragment
+                    }
+                });
+
+
+                buttonNext.setOnClickListener(v -> {
+                    int maxPage = (int) Math.ceil((double) itemCollections.size() / PAGE_SIZE);
+                    if (currentPage < maxPage - 1) {
+                        currentPage++;
+                        List<ItemCollection> nextPageItems = getCurrentPageItems();
+                        boxAdapter.setBoxList(nextPageItems);
+                        recyclerView.scrollToPosition(0);
+                    }
+                });
             }
         });
-
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new BlankFragment());
-                //put fragment name here instead of BlankFragment
-            }
-        });
-
-        buttonNext.setOnClickListener(v -> {
-            if (currentPage < maxPage - 1) {
-                currentPage++;
-                boxListHistory.add(new ArrayList<>(boxAdapter.getBoxList()));
-                List<String> nextPageItems = getCurrentPageItems();
-                boxAdapter.setBoxList(nextPageItems);
-                boxAdapter.notifyDataSetChanged();
-                recyclerView.scrollToPosition(0);
-            }
-        });
-
-        boxListHistory.add(new ArrayList<>(boxList));
 
         return view;
     }
@@ -84,7 +115,7 @@ public abstract class HomeFragment extends Fragment {
     public void goToPreviousPage() {
         if (currentPage > 0) {
             currentPage--;
-            List<String> previousPageItems = getCurrentPageItems();
+            List<ItemCollection> previousPageItems = getCurrentPageItems();
             boxAdapter.setBoxList(previousPageItems);
             boxAdapter.notifyDataSetChanged();
             recyclerView.scrollToPosition(0);
@@ -102,9 +133,9 @@ public abstract class HomeFragment extends Fragment {
         transaction.commit();
     }
 
-    private List<String> getCurrentPageItems() {
+    private List<ItemCollection> getCurrentPageItems() {
         int start = currentPage * PAGE_SIZE;
-        int end = Math.min(start + PAGE_SIZE, boxList.size());
-        return new ArrayList<>(boxList.subList(start, end));
+        int end = Math.min(start + PAGE_SIZE, itemCollections.size());
+        return new ArrayList<>(itemCollections.subList(start, end));
     }
 }
