@@ -6,6 +6,7 @@ import com.google.firebase.database.DataSnapshot;
 
 import java.io.File;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class ItemCollection {
         this.category = category;
         this.period = period;
         this.description = description;
+        this.media = new ArrayList<Uri>();
         for (String inputMedia : media) {
             this.media.add(Uri.parse(inputMedia));
         }
@@ -48,6 +50,7 @@ public class ItemCollection {
         this.category = category;
         this.period = period;
         this.description = description;
+        this.media = new ArrayList<Uri>();
         for (String inputMedia : media) {
             this.media.add(Uri.parse(inputMedia));
         }
