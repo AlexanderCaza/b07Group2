@@ -15,14 +15,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/RLNNum"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"/>
 
     <EditText
         android:id="@+id/RLNNum"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/RLNButton"
         app:layout_constraintStart_toEndOf="@+id/ReportLotNum"
@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/RLNNum"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintTop_toTopOf="@+id/RLNNum"/>
 
     <TextView
@@ -50,14 +50,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/RNText"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"/>
 
     <EditText
         android:id="@+id/RNText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:inputType="text"
         app:layout_constraintEnd_toStartOf="@+id/RNButton"
         app:layout_constraintStart_toEndOf="@+id/ReportName"
@@ -73,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/RNText"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintTop_toTopOf="@+id/RNText"/>
 
     <TextView
@@ -85,31 +85,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/RCText"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"/>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/RCText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:inputType="text"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="145dp"
+        android:layout_height="75dp"
+        android:layout_margin="45px"
+        app:helperTextTextColor="#FF0000"
         app:layout_constraintEnd_toStartOf="@+id/RCButton"
         app:layout_constraintStart_toEndOf="@+id/ReportCat"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginStart="8dp"
-        app:layout_constraintTop_toTopOf="@+id/ReportCat"/>
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@+id/ReportCat">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCC"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Category" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/RCButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/RCText"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toTopOf="@+id/RCText"/>
+        app:layout_constraintStart_toEndOf="@+id/RCText"
+        app:layout_constraintTop_toTopOf="@+id/RCText" />
 
     <TextView
         android:id="@+id/ReportCatDP"
@@ -120,37 +129,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/RCDPText"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"/>
 
-    <EditText
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/RCDPText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:inputType="text"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="145dp"
+        android:layout_height="75dp"
+        android:layout_margin="45px"
+        app:helperTextTextColor="#FF0000"
         app:layout_constraintEnd_toStartOf="@+id/RCDPButton"
         app:layout_constraintStart_toEndOf="@+id/ReportCatDP"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginStart="8dp"
-        app:layout_constraintTop_toTopOf="@+id/ReportCatDP"/>
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@+id/ReportCatDP">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCCDP"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Category" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/RCDPButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/RCDPText"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toTopOf="@+id/RCDPText"/>
+        app:layout_constraintStart_toEndOf="@+id/RCDPText"
+        app:layout_constraintTop_toTopOf="@+id/RCDPText" />
 
     <TextView
         android:id="@+id/ReportPeriod"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="56dp"
         android:text="Generate the Report by Period:"
         app:layout_constraintEnd_toStartOf="@+id/RPText"
@@ -158,70 +176,86 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RCDPButton" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/RPText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:inputType="text"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="145dp"
+        android:layout_height="75dp"
+        android:layout_margin="45px"
+        app:helperTextTextColor="#FF0000"
         app:layout_constraintEnd_toStartOf="@+id/RPButton"
         app:layout_constraintStart_toEndOf="@+id/ReportPeriod"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginStart="8dp"
-        app:layout_constraintTop_toTopOf="@+id/ReportPeriod"/>
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@+id/ReportPeriod">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCP"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Period" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/RPButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/RPText"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toTopOf="@+id/RPText"/>
+        app:layout_constraintStart_toEndOf="@+id/RPText"
+        app:layout_constraintTop_toTopOf="@+id/RPText" />
 
     <TextView
         android:id="@+id/ReportPeriodDP"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
         android:text="Generate the Report by Period with Description and Picture Only:"
         app:layout_constraintEnd_toStartOf="@+id/RPDPText"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RPButton" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/RPDPText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:inputType="text"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="145dp"
+        android:layout_height="75dp"
+        android:layout_margin="45px"
+        app:helperTextTextColor="#FF0000"
         app:layout_constraintEnd_toStartOf="@+id/RPDPButton"
         app:layout_constraintStart_toEndOf="@+id/ReportPeriodDP"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginStart="8dp"
-        app:layout_constraintTop_toTopOf="@+id/ReportPeriodDP"/>
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toTopOf="@+id/ReportPeriodDP">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCPDP"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Period" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/RPDPButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/RPDPText"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toTopOf="@+id/RPDPText"/>
+        app:layout_constraintStart_toEndOf="@+id/RPDPText"
+        app:layout_constraintTop_toTopOf="@+id/RPDPText" />
 
     <TextView
         android:id="@+id/ReportAll"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="56dp"
+        android:layout_width="152dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
         android:text="Generate the Report for All Items"
         app:layout_constraintEnd_toStartOf="@+id/RAButton"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -230,10 +264,10 @@
 
     <TextView
         android:id="@+id/ReportAllDP"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="148dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:text="Generate the Report for All Items with Description and Picture Only"
         app:layout_constraintEnd_toStartOf="@+id/RADPButton"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -242,10 +276,10 @@
 
     <Button
         android:id="@+id/RADPButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="167dp"
+        android:layout_height="51dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -254,9 +288,9 @@
 
     <Button
         android:id="@+id/RAButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_width="164dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
