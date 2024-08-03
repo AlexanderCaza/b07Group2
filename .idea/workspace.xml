@@ -39,10 +39,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5605591b-1c2b-4c67-9b35-2a846798bb90" name="Changes" comment="feat (tests): added unit tests for compatible BoxAdapter methods&#10;fix: fixed bug of onBackPressed override where pressing back would crash the app">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ItemCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ItemCollection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,25 +73,7 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="B07 Demo Summer 2024" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="B07 Demo Summer 2024" type="f1a62948:ProjectNode" />
-                <item name="app" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="B07 Demo Summer 2024" type="f1a62948:ProjectNode" />
-                <item name="app" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="B07 Demo Summer 2024" type="f1a62948:ProjectNode" />
-                <item name="app" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
+                <item name="TAAM App" type="f1a62948:ProjectNode" />
               </path>
             </expand>
             <select />
@@ -164,7 +144,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/adamc/AndroidStudioProjects/b07Group2/TAAMApp/settings.gradle.kts&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ajmc0/Desktop/_University/Year 2 Summer/CSCB07/Project/code/b07Group2/TAAMApp&quot;,
     &quot;project.structure.last.edited&quot;: &quot;SDK Location&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,

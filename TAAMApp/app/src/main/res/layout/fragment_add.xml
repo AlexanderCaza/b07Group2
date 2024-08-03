@@ -96,18 +96,24 @@
                     android:scrollbars="vertical" />
 
                 <Button
-                    android:id="@+id/uploadImageButton"
+                    android:id="@+id/selectMediaButton"
                     android:layout_width="match_parent"
                     android:layout_height="63dp"
-                    android:text="Upload Image"
+                    android:text="Select Media"
                     android:textSize="24sp"
                     app:cornerRadius="20px" />
 
-                <Space
+                <Button
+                    android:id="@+id/uploadMediaButton"
                     android:layout_width="match_parent"
-                    android:layout_height="32dp" />
+                    android:layout_height="wrap_content"
+                    android:text="Upload Media" />
 
             </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="32dp" />
 
             <Button
                 android:id="@+id/submitButton"

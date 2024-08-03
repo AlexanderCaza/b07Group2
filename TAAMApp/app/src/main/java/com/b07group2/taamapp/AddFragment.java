@@ -1,5 +1,7 @@
 package com.b07group2.taamapp;
 
+import static com.google.android.gms.tasks.Tasks.await;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
@@ -24,13 +26,25 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.sql.Array;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class AddFragment extends Fragment {
 
@@ -39,17 +53,37 @@ public class AddFragment extends Fragment {
     private TextInputLayout categoryInput;
     private TextInputLayout periodInput;
     private EditText descriptionInput;
-    private Button uploadImageButton;
+    private Button selectMediaButton;
+    private Button uploadMediaButton;
+    private Button submitButton;
 
-    private ArrayList<Uri> urisData;
+    private ArrayList<Uri> mediaUris;
+    private ArrayList<Uri> cloudMediaUris;
 
     private CollectionsDatabase database;
 
-    private static final String[] validCategories = {"Jade", "Paintings", "Calligraphy", "Rubbings",
-            "Bronze", "Brass and Copper", "Gold and Silvers", "Lacquer", "Enamels"};
-    private static final String[] validPeriods = {"Xia", "Shang", "Zhou", "Chuanqiu", "Zhanggou", "Qin",
-            "hang", "Shangou", "Ji", "South and North", "Shui", "Tang", "Liao", "Song",
-            "Jin", "Yuan", "Ming", "Qing", "Modern"};
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        mediaUris = new ArrayList<>();
+                        if (result.getData() != null && result.getData().getClipData() != null) {
+                            int count = result.getData().getClipData().getItemCount();
+                            for (int i = 0; i < count; i++) {
+                                Uri imageUri = result.getData().getClipData().getItemAt(i).getUri();
+                                mediaUris.add(imageUri);
+                            }
+                            if (mediaUris.size() >= 1) {
+                                uploadMediaButton.setEnabled(true);
+                                uploadMediaButton.setText(MessageFormat.format(
+                                        "Upload {0} media files", mediaUris.size()));
+                            }
+                        }
+                    }
+                }
+            });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +93,8 @@ public class AddFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
         AutoCompleteTextView autoCompleteCategories = view.findViewById(R.id.autoCompleteCategory);
-        ArrayAdapter<String> adapterCategories = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_item, validCategories);
+        ArrayAdapter<String> adapterCategories = new ArrayAdapter<String>(
+                getActivity().getApplicationContext(), R.layout.list_item, ItemCollection.getValidCategories());
         autoCompleteCategories.setAdapter(adapterCategories);
         autoCompleteCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -70,7 +105,8 @@ public class AddFragment extends Fragment {
         });
 
         AutoCompleteTextView autoCompletePeriods = view.findViewById(R.id.autoCompletePeriod);
-        ArrayAdapter<String> adapterPeriods = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.list_item, validPeriods);
+        ArrayAdapter<String> adapterPeriods = new ArrayAdapter<String>(
+                getActivity().getApplicationContext(), R.layout.list_item, ItemCollection.getValidPeriods());
         autoCompletePeriods.setAdapter(adapterPeriods);
         autoCompletePeriods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -87,8 +123,36 @@ public class AddFragment extends Fragment {
         periodInput = view.findViewById(R.id.periodInput);
         descriptionInput = view.findViewById(R.id.descriptionInput);
 
-        uploadImageButton = view.findViewById(R.id.uploadImageButton);
-        Button submitButton = view.findViewById(R.id.submitButton);
+        selectMediaButton = view.findViewById(R.id.selectMediaButton);
+        uploadMediaButton = view.findViewById(R.id.uploadMediaButton);
+        submitButton = view.findViewById(R.id.submitButton);
+
+        // The logic
+
+        selectMediaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/* video/*");
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {"image/*", "video/*"});
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                activityResultLauncher.launch(intent);
+            }
+        });
+
+        uploadMediaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadMediaButton.setText("Uploading files...");
+                uploadMediaButton.setEnabled(false);
+                submitButton.setEnabled(false);
+                cloudMediaUris = new ArrayList<>();
+                uploadMedia(cloudMediaUris);
+            }
+        }
+        );
+
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,61 +167,30 @@ public class AddFragment extends Fragment {
             }
         });
 
-        uploadImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Upload Image Button", "Functioning");
-                String[] mimeTypes = {"image/*", "video/*"};
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
-                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                try {
-                    someActivityResultLauncher.launch(intent);
-                } catch (Exception e){
-                    System.out.println(e);
-                }
-            }
-        });
-
         return view;
     }
-    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        Log.d("ADASD","ASDASD");
-                        System.out.println(data);
-                        intentDataToUris(data);
-                        System.out.println(urisData);
-                    }
-                }
-            });
-    private void intentDataToUris(Intent data) {
-        urisData = new ArrayList<Uri>();
-        ClipData clipData = data.getClipData();
-        for(int i  = 0 ; i < clipData.getItemCount(); i++) {
-            urisData.add(clipData.getItemAt(i).getUri());
-        }
-    }
+
     private boolean uploadData() {
+        ItemCollection item;
         int lotNumber = Integer.parseInt(String.valueOf(lotInput.getEditText().getText()));
         String name = String.valueOf(nameInput.getEditText().getText());
         String category = String.valueOf(categoryInput.getEditText().getText());
         String period = String.valueOf(periodInput.getEditText().getText());
         String description = String.valueOf(descriptionInput.getText());
-        String[] urisStringData = new String[urisData.size()];
+        if (!(cloudMediaUris == null)) {
+            String[] urisStringData = new String[cloudMediaUris.size()];
 
-        for(int i = 0; i < urisData.size(); i++) {
-            urisStringData[i] = urisData.get(i).toString();
+            for (int i = 0; i < cloudMediaUris.size(); i++) {
+                urisStringData[i] = cloudMediaUris.get(i).toString();
+            }
+            System.out.println(urisStringData[0]);
+            item = new ItemCollection(lotNumber, name, category, period, description,
+                    Arrays.asList(urisStringData));
+            Log.d("Data Upload", "Yes Image");
+        } else {
+            item = new ItemCollection(lotNumber, name, category, period, description);
+            Log.d("Data Upload", "No image");
         }
-        System.out.println(urisStringData[0]);
-
-        ItemCollection item = new ItemCollection(lotNumber, name, category, period, description, urisStringData);
 
         database.addItemCollection(item);
 
@@ -172,9 +205,11 @@ public class AddFragment extends Fragment {
         categoryInput.getEditText().setText(null);
         periodInput.getEditText().setText(null);
         descriptionInput.setText(null);
-        urisData = null;
-        uploadImageButton.setText("Upload Image");
+        mediaUris = null;
+        cloudMediaUris = null;
+        uploadMediaButton.setText("Upload Media Files");
     }
+
     private boolean verifyAllInput() {
         boolean verified = true;
         if(!verifyLotInput())
@@ -189,12 +224,21 @@ public class AddFragment extends Fragment {
 
     }
     private boolean verifyLotInput() {
-        if(lotInput.getEditText().getText().length() > 0) {
-            lotInput.setError(null);
-            return true;
+        if  (lotInput.getEditText().getText().length() <= 0) {
+            lotInput.setError("Required*");
+            return false;
         }
-        lotInput.setError("Required*");
-        return false;
+        else if  (lotInput.getEditText().getText().length() > 9) {
+            lotInput.setError("Max Lot Number: 999999999*");
+            return false;
+        }
+        else if (!database.uniqueLotNumber(Integer.parseInt(lotInput.getEditText().getText()
+                .toString()))) {
+            lotInput.setError("Duplicate Lot Number*");
+            return false;
+        }
+        lotInput.setError(null);
+        return true;
     }
     private boolean verifyNameInput() {
         if(nameInput.getEditText().getText().length() > 0) {
@@ -222,10 +266,37 @@ public class AddFragment extends Fragment {
         return false;
     }
 
-    private boolean verifyImageInput() {
-        if(urisData != null) {
-            return true;
-        }
-        return false;
+    private void uploadMedia(List<Uri> returnedUris) {
+        StorageReference imageSite = FirebaseStorage.getInstance(
+                        "gs://cscb07-70b84.appspot.com").getReference().child("media")
+                .child(UUID.randomUUID().toString());
+        Uri fileToUpload = mediaUris.get(returnedUris.size());
+        UploadTask task = imageSite.putFile(fileToUpload);
+        task.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                imageSite.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        String result = task.getResult().toString();
+                        returnedUris.add(Uri.parse(result));
+                        if (mediaUris.size() == returnedUris.size()) {
+                            Toast.makeText(getContext(), "Files uploaded successfully", Toast.LENGTH_SHORT).show();
+                            uploadMediaButton.setText("Upload images");
+                            uploadMediaButton.setEnabled(true);
+                            submitButton.setEnabled(true);
+                        } else {
+                            uploadMedia(returnedUris);
+                        }
+                    }
+                });
+            }
+        });
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Upload failed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

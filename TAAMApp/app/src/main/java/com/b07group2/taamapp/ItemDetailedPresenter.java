@@ -3,7 +3,9 @@ package com.b07group2.taamapp;
 import android.net.Uri;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ItemDetailedPresenter {
@@ -56,7 +58,7 @@ public class ItemDetailedPresenter {
             }
 
             // Show media
-            Uri[] files = item.getMedia();
+            List<Uri> files = ItemCollection.mediaToUri(item.getMedia());
             for (Uri file : files) {
                 if (file.toString().endsWith(".jpg") || file.toString().endsWith(".png")) {
                     view.addPicture(new File(Objects.requireNonNull(file.getPath())));
