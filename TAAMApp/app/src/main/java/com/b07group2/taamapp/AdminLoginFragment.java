@@ -19,8 +19,8 @@ public class AdminLoginFragment extends Fragment {
     private final String username = "admin";
     private final String password = "pass";
 
-    private TextInputLayout usernameInput;
-    private TextInputLayout passwordInput;
+    protected TextInputLayout usernameInput;
+    protected TextInputLayout passwordInput;
 
     @Nullable
     @Override
@@ -49,7 +49,7 @@ public class AdminLoginFragment extends Fragment {
         transaction.commit();
     }
 
-    private boolean verifyUsernameAndPassword() {
+    protected boolean verifyUsernameAndPassword() {
         if(usernameInput.getEditText().getText().toString().equals(username) &&
                 passwordInput.getEditText().getText().toString().equals(password)) {
             usernameInput.setError(null);
