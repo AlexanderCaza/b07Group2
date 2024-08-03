@@ -27,7 +27,7 @@ public abstract class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private BoxAdapter boxAdapter;
     private int currentPage = 0;
-    private static final int PAGE_SIZE = 5; //boxes per page
+    private static final int PAGE_SIZE = 4; //boxes per page
     private CollectionsDatabase collectionsDatabase;
     private List<ItemCollection> itemCollections;
     protected boolean admin = false;
