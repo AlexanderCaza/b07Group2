@@ -12,11 +12,17 @@ import static org.junit.Assert.assertEquals;
 public class BoxAdapterUnitTest {
 
     private BoxAdapter boxAdapter;
-    private List<String> boxList;
+    private List<ItemCollection> boxList;
 
     @Before
     public void setUp() {
-        boxList = Arrays.asList("Box 1", "Box 2", "Box 3", "Box 4", "Box 5");
+        boxList = Arrays.asList(
+                new ItemCollection(1, "Item 1", "Category 1", "Period 1", "Description 1"),
+                new ItemCollection(2, "Item 2", "Category 2", "Period 2", "Description 2"),
+                new ItemCollection(3, "Item 3", "Category 3", "Period 3", "Description 3"),
+                new ItemCollection(4, "Item 4", "Category 4", "Period 4", "Description 4"),
+                new ItemCollection(5, "Item 5", "Category 5", "Period 5", "Description 5")
+        );
         boxAdapter = new BoxAdapter(boxList);
     }
 
@@ -32,8 +38,8 @@ public class BoxAdapterUnitTest {
 
     @Test
     public void testGetBoxList(){
-        List<String> boxes = boxAdapter.getBoxList();
-        assertEquals("Box 2", boxes.get(1));
+        List<ItemCollection> boxes = boxAdapter.getBoxList();
+        assertEquals("Item 2", boxes.get(1).getName());
     }
 
 
