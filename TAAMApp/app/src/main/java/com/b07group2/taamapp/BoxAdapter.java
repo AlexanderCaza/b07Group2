@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.BoxViewHolder>{
 
     private List<ItemCollection> boxList;
-    private final int pageSize = 5;
+    private final int pageSize = 4;
     private int currentPage = 0;
     private boolean[] clickedPositions;
 
