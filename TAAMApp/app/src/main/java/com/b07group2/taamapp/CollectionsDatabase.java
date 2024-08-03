@@ -77,7 +77,7 @@ public class CollectionsDatabase {
 
     public void addItemCollection(ItemCollection toAdd) throws dbException {
         for (ItemCollection existing : itemCollections) {
-            if (existing.getLotNumber() == existing.getLotNumber())
+            if (toAdd.getLotNumber() == existing.getLotNumber())
                 throw new dbException("Error: Duplicate id!");
         }
         ArrayList<String> cloudMedia = new ArrayList<String>();
