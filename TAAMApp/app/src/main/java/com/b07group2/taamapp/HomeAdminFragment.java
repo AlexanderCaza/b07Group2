@@ -1,6 +1,8 @@
 package com.b07group2.taamapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -45,8 +48,27 @@ public class HomeAdminFragment extends HomeFragment {
         buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new BlankFragment());
-                //put fragment name here instead of BlankFragment
+                if (boxAdapter.clickCount() != 1) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("Select only one item to be viewed!");
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                } else {
+                    // Start ItemDetailedView with item lot number
+
+                    Intent intent = new Intent(getContext(), RemoveItemView.class);
+                    ItemCollection item = boxAdapter.getFirstClickedItem();
+
+                    if (item != null) {
+                        intent.putExtra("item_lot", item.getLotNumber());
+                    } else {
+                        // Show error message
+                        Log.w("HomeFragment", "No item was clicked");
+                        return;
+                    }
+
+                    startActivity(intent);
+                }
             }
         });
 
