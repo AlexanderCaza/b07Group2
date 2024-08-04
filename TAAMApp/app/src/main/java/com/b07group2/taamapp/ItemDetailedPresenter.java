@@ -11,6 +11,7 @@ import java.util.List;
 public class ItemDetailedPresenter {
     ItemDetailedView view;
     ArrayList<ItemCollection> items;
+    private ItemCollection item;
 
     public ItemDetailedPresenter(ItemDetailedView view) {
         this.view = view;
@@ -38,12 +39,13 @@ public class ItemDetailedPresenter {
                 }
             }
 
+            this.item = item;
+
             if (item == null) {
                 view.showWarning("Item not found");
                 view.setInformation(0, "Item not found", "Item not found", "Item not found", "Item not found");
                 return;
             }
-
 
             // set the information in the view
             int lot = item.getLotNumber();
@@ -71,5 +73,9 @@ public class ItemDetailedPresenter {
             }
 
         });
+    }
+
+    public ItemCollection getItem() {
+        return item;
     }
 }
