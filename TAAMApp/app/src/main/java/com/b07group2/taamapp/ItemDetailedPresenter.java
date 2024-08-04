@@ -1,6 +1,9 @@
 package com.b07group2.taamapp;
 
+import android.content.ContentResolver;
+
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +53,8 @@ public class ItemDetailedPresenter {
             String description = item.getDescription();
 
             boolean res = view.setInformation(lot, name, category, period, description);
-            while (!res){
-                res =view.setInformation(lot, name, category, period, description);
+            while (!res) {
+                res = view.setInformation(lot, name, category, period, description);
             }
 
             // if No media is present
@@ -60,14 +63,13 @@ public class ItemDetailedPresenter {
                 return;
             }
 
-            // Show media
-            if(item.getMedia() != null) {
-                List<Uri> files = ItemCollection.mediaToUri(item.getMedia());
 
-                for (Uri file : files) {
-                    view.addPicture(file.toString());
-                }
+            List<Uri> medias = ItemCollection.mediaToUri(item.getMedia());
+
+            for (Uri media : medias) {
+                new FetchMimeTypeTask(media, view).execute(media.toString());
             }
+
         });
     }
 }

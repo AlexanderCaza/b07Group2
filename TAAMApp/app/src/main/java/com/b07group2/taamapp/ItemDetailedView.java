@@ -1,5 +1,6 @@
 package com.b07group2.taamapp;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -88,7 +89,6 @@ public class ItemDetailedView extends AppCompatActivity {
         try {
             VideoView videoView = new VideoView(this);
             videoView.setVideoURI(Uri.parse(link));
-            Log.w("ItemDetailedView", "Video: " + link);
             media_layout.addView(videoView);
         }
         catch (Exception e){
@@ -121,5 +121,9 @@ public class ItemDetailedView extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
 
+    }
+
+    public Context getContextForPresenter() {
+        return this.getApplicationContext();
     }
 }
