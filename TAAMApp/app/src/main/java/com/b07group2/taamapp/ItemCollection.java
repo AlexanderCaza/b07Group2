@@ -5,19 +5,20 @@ import android.net.Uri;
 import com.google.firebase.database.DataSnapshot;
 
 import java.io.File;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemCollection {
+public class ItemCollection implements Serializable {
 
     private int lotNumber;
     private String name;
     private String category;
     private String period;
     private String description;
-    private List<Uri> media;
+    private List<String> media;
     final public static String[] validCategories = {"Jade", "Paintings", "Calligraphy", "Rubbings",
             "Bronze", "Brass and Copper", "Gold and Silvers", "Lacquer", "Enamels"};
     final public static String[] validPeriods = {"Xia", "Shang", "Zhou", "Chuanqiu", "Zhanggou", "Qin",
@@ -36,24 +37,7 @@ public class ItemCollection {
         this.category = category;
         this.period = period;
         this.description = description;
-        this.media = new ArrayList<Uri>();
-        for (String inputMedia : media) {
-            this.media.add(Uri.parse(inputMedia));
-        }
-    }
-
-    // Constructor with media field
-    public ItemCollection(int lotNumber, String name, String category, String period,
-                          String description, String[] media) {
-        this.lotNumber = lotNumber;
-        this.name = name;
-        this.category = category;
-        this.period = period;
-        this.description = description;
-        this.media = new ArrayList<Uri>();
-        for (String inputMedia : media) {
-            this.media.add(Uri.parse(inputMedia));
-        }
+        this.media = media;
     }
 
     // Constructor without media field
@@ -109,22 +93,13 @@ public class ItemCollection {
         this.description = description;
     }
 
-    public Uri[] getMedia() {
-        if (this.media == null) {
-            return new Uri[0];
-        }
-
-        Uri[] media = new Uri[this.media.size()];
-        for (int i = 0; i < this.media.size(); i++) {
-            media[i] = this.media.get(i);
-        }
+    public List<String> getMedia() {
         return media;
     }
 
-    public void setMedia(Uri[] media) {
-        this.media = Arrays.asList(media);
+    public void setMedia(List<String> media) {
+        this.media = media;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -153,6 +128,14 @@ public class ItemCollection {
 
     public static boolean isValidPeriod(String period) {
         return Arrays.asList(validPeriods).contains(period);
+    }
+
+    public static List<Uri> mediaToUri(List<String> strings) {
+        ArrayList<Uri> uriMedia = new ArrayList<Uri>();
+        for (String string : strings) {
+            uriMedia.add(Uri.parse(string));
+        }
+        return uriMedia;
     }
 
 }
