@@ -1,6 +1,7 @@
 package com.b07group2.taamapp;
 
 import android.content.Context;
+import android.media.browse.MediaBrowser;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +12,16 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.OptIn;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.media3.common.MediaItem;
+import androidx.media3.common.util.UnstableApi;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.ui.AspectRatioFrameLayout;
+import androidx.media3.ui.PlayerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -48,7 +55,18 @@ public class ItemDetailedView extends AppCompatActivity {
         media_label = (TextView) findViewById(R.id.item_media_label);
 
         back_button = (Button) findViewById(R.id.item_back_button);
-        back_button.setOnClickListener(v -> finish());
+        back_button.setOnClickListener(v -> {
+            // release all players if exist
+            for (int i = 0; i < media_layout.getChildCount(); i++) {
+                android.view.View view = media_layout.getChildAt(i);
+                if (view instanceof PlayerView) {
+                    PlayerView playerView = (PlayerView) view;
+                    ExoPlayer player = (ExoPlayer) playerView.getPlayer();
+                    player.release();
+                }
+            }
+            finish();
+        });
 
         presenter = new ItemDetailedPresenter(this);
 
@@ -76,6 +94,7 @@ public class ItemDetailedView extends AppCompatActivity {
         try {
             ImageView imageView = new ImageView(this);
             Picasso.get().load(link).into(imageView);
+
             Log.w("ItemDetailedView", "Picture: " + link);
             media_layout.addView(imageView);
         }
@@ -85,11 +104,33 @@ public class ItemDetailedView extends AppCompatActivity {
         }
     }
 
+    @OptIn(markerClass = UnstableApi.class)
     public void addVideo(String link) {
         try {
-            VideoView videoView = new VideoView(this);
-            videoView.setVideoURI(Uri.parse(link));
-            media_layout.addView(videoView);
+            PlayerView playerView = new PlayerView(this);
+            ExoPlayer player = new ExoPlayer.Builder(this).build();
+
+            playerView.setPlayer(player);
+
+            MediaItem mediaItem = MediaItem.fromUri(link);
+
+            player.setMediaItem(mediaItem);
+
+            player.prepare();
+
+            // make the player more beautiful
+            playerView.setShowBuffering(PlayerView.SHOW_BUFFERING_ALWAYS);
+            playerView.setControllerShowTimeoutMs(3000);
+            playerView.setControllerHideOnTouch(false);
+
+            // set zoom of the PlayerView of the content
+            playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
+
+            // set min height of the PlayerView
+            playerView.setMinimumHeight(1000);
+
+
+            media_layout.addView(playerView);
         }
         catch (Exception e){
             // log the error
@@ -125,5 +166,20 @@ public class ItemDetailedView extends AppCompatActivity {
 
     public Context getContextForPresenter() {
         return this.getApplicationContext();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // release all players if exist
+        for (int i = 0; i < media_layout.getChildCount(); i++) {
+            android.view.View view = media_layout.getChildAt(i);
+            if (view instanceof PlayerView) {
+                PlayerView playerView = (PlayerView) view;
+                ExoPlayer player = (ExoPlayer) playerView.getPlayer();
+                player.release();
+            }
+        }
+        finish();
+        super.onBackPressed();
     }
 }
