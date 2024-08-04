@@ -6,4 +6,13 @@
     <string name="item_category_label">Category:</string>
     <string name="item_period_label">Period:</string>
     <string name="item_description_label">Description:</string>
+    <string name="search_page_head_label">Search for Collections:</string>
+    <string name="search_lot_number_label">Lot Number</string>
+    <string name="search_name_label">Name</string>
+    <string name="search_category_label">Category</string>
+    <string name="search_period_label">Period</string>
+    <string name="search_description_label">Description</string>
+    <string name="item_media_label">Media:</string>
+    <string name="item_no_media_label">Media: No media available</string>
+
 </resources>

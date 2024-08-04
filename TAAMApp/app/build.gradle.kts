@@ -46,8 +46,17 @@ dependencies {
     implementation(libs.gridlayout)
     implementation(libs.legacy.support.v4)
     implementation(libs.recyclerview)
+    implementation("org.apache.commons:commons-lang3:3.15.0")
+    implementation("com.squareup.picasso:picasso:2.71828")
+
+    implementation("androidx.media3:media3-exoplayer:1.4.0")
+    implementation("androidx.media3:media3-exoplayer-dash:1.4.0")
+    implementation("androidx.media3:media3-ui:1.4.0")
+
+
     testImplementation(libs.junit)
-    testImplementation("org.mockito:mockito-all:1.10.19")
+    testImplementation("org.mockito:mockito-inline:3.12.4")
+    testImplementation("org.mockito:mockito-junit-jupiter:3.12.4")
     testImplementation(libs.mockito.core)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
