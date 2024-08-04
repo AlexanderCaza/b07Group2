@@ -105,13 +105,16 @@
             android:id="@+id/autoCC"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Category" />
+            android:hint="Category"
+            android:inputType="none"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/RCButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:text="Submit"
@@ -150,12 +153,15 @@
         android:id="@+id/autoCCDP"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="Category" />
+        android:hint="Category"
+        android:inputType="none"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/RCDPButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:text="Submit"
@@ -193,12 +199,15 @@
             android:id="@+id/autoCP"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Period" />
+            android:hint="Period"
+            android:inputType="none"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/RPButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:text="Submit"
@@ -236,12 +245,15 @@
             android:id="@+id/autoCPDP"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Period" />
+            android:hint="Period"
+            android:inputType="none"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/RPDPButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:text="Submit"
