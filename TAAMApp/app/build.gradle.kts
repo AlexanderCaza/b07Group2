@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.legacy.support.v4)
     implementation(libs.recyclerview)
     implementation("org.apache.commons:commons-lang3:3.15.0")
+    implementation("com.squareup.picasso:picasso:2.71828")
     testImplementation(libs.junit)
     testImplementation("org.mockito:mockito-inline:3.12.4")
     testImplementation("org.mockito:mockito-junit-jupiter:3.12.4")

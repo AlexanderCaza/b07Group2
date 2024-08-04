@@ -2,16 +2,8 @@ package com.b07group2.taamapp;
 
 import android.net.Uri;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.StorageReference;
-
-import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ItemDetailedPresenter {
     ItemDetailedView view;
@@ -62,16 +54,18 @@ public class ItemDetailedPresenter {
                 res =view.setInformation(lot, name, category, period, description);
             }
 
+            // if No media is present
+            if (item.getMedia() == null) {
+                view.setNoMedia();
+                return;
+            }
+
             // Show media
             if(item.getMedia() != null) {
                 List<Uri> files = ItemCollection.mediaToUri(item.getMedia());
 
                 for (Uri file : files) {
-                    if (file.toString().endsWith(".jpg") || file.toString().endsWith(".png")) {
-                        view.addPicture(new File(Objects.requireNonNull(file.getPath())));
-                    } else if (file.toString().endsWith(".mp4")) {
-                        view.addVideo(new File(Objects.requireNonNull(file.getPath())));
-                    }
+                    view.addPicture(file.toString());
                 }
             }
         });
