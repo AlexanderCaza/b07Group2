@@ -7,124 +7,171 @@
     android:layout_height="match_parent"
     tools:context="ItemDetailedView">
 
-
-    <TextView
-        android:id="@+id/lot_number_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lot_number_label"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/item_name_label"
-        app:layout_constraintStart_toStartOf="@+id/item_files_layout"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/lot_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/item_files_layout"
-        app:layout_constraintTop_toTopOf="@+id/lot_number_label" />
-
-    <TextView
-        android:id="@+id/item_name_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/item_name_label"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/item_category_label"
-        app:layout_constraintStart_toStartOf="@+id/item_files_layout"
-        app:layout_constraintTop_toBottomOf="@+id/lot_number_label" />
-
-    <TextView
-        android:id="@+id/item_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/item_files_layout"
-        app:layout_constraintTop_toTopOf="@+id/item_name_label" />
-
-    <TextView
-        android:id="@+id/item_category_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/item_category_label"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/item_period_label"
-        app:layout_constraintStart_toStartOf="@+id/item_files_layout"
-        app:layout_constraintTop_toBottomOf="@+id/item_name_label" />
-
-    <TextView
-        android:id="@+id/item_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/item_files_layout"
-        app:layout_constraintTop_toTopOf="@+id/item_category_label" />
-
-    <TextView
-        android:id="@+id/item_period_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/item_period_label"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/item_description_label"
-        app:layout_constraintStart_toStartOf="@+id/item_files_layout"
-        app:layout_constraintTop_toBottomOf="@+id/item_category_label" />
-
-    <TextView
-        android:id="@+id/item_period"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/item_files_layout"
-        app:layout_constraintTop_toTopOf="@+id/item_period_label" />
-
-    <TextView
-        android:id="@+id/item_description_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/item_description_label"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/item_files_layout"
-        app:layout_constraintStart_toStartOf="@+id/item_files_layout"
-        app:layout_constraintTop_toBottomOf="@+id/item_period_label" />
-
-    <TextView
-        android:id="@+id/item_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/item_files_layout"
-        app:layout_constraintTop_toTopOf="@+id/item_description_label" />
-
-    <LinearLayout
-        android:id="@+id/item_files_layout"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/item_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/item_border"
+        android:padding="16dp"
+        android:scrollbars="vertical"
+        app:barrierMargin="1dp"
         app:layout_constraintBottom_toTopOf="@+id/item_back_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_description_label">
+        app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_inner_constraint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/lot_number_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lot_number_label"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/item_name_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/lot_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lot_number_label" />
+
+            <TextView
+                android:id="@+id/item_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_name_label"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/item_category_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lot_number_label" />
+
+            <TextView
+                android:id="@+id/item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/item_name_label" />
+
+            <TextView
+                android:id="@+id/item_category_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_category_label"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/item_period_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_name_label" />
+
+            <TextView
+                android:id="@+id/item_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/item_category_label" />
+
+            <TextView
+                android:id="@+id/item_period_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_period_label"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/item_description_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_category_label" />
+
+            <TextView
+                android:id="@+id/item_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/item_period_label" />
+
+            <TextView
+                android:id="@+id/item_description_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_description_label"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/item_files_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_period_label" />
+
+            <TextView
+                android:id="@+id/item_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/item_description_label" />
+
+            <View
+                android:id="@+id/item_line_sep"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="16dp"
+                android:background="#C7A762"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_description" />
+
+            <TextView
+                android:id="@+id/item_media_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/item_media_label"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/item_files_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_line_sep" />
+
+            <LinearLayout
+                android:id="@+id/item_files_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/item_inner_constraint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/item_line_sep">
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <Button
         android:id="@+id/item_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:text="@string/back_button_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_files_layout" />
-
+        app:layout_constraintTop_toBottomOf="@+id/item_scroll_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
