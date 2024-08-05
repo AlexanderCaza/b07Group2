@@ -114,7 +114,7 @@ public class CollectionsDatabase {
         }
         */
         ItemCollection newItem;
-        if (!toAdd.getMedia().isEmpty()) {
+        if (!(toAdd.getMedia() == null) && !toAdd.getMedia().isEmpty()) {
             newItem = new ItemCollection(toAdd.getLotNumber(), toAdd.getName(),
                     toAdd.getCategory(), toAdd.getPeriod(), toAdd.getDescription(), toAdd.getMedia());
         }
