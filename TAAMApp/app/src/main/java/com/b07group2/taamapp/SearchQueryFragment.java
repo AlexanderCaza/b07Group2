@@ -67,8 +67,8 @@ public class SearchQueryFragment extends Fragment implements AdapterView.OnItemS
             public void onClick(View view) {
                 SearchQuery query = new SearchQuery(lotNumberField.getText().toString(),
                         nameField.getText().toString(),
-                        categoriesSpinner.getSelectedItem().toString(),
                         periodsSpinner.getSelectedItem().toString(),
+                        categoriesSpinner.getSelectedItem().toString(),
                         "", "");
 
                         byte[] data = SerializationUtils.serialize(query);
@@ -79,10 +79,6 @@ public class SearchQueryFragment extends Fragment implements AdapterView.OnItemS
                         searchResultsFragment.setArguments(bundle);
 
                         loadFragment(searchResultsFragment);
-
-                // loadFragment((new SearchResultsFragment(@NonNull LayoutInflater inflater,
-                //        @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View view)));
-                // put search fragment name here instead of BlankFragment
             }
         });
         return view;

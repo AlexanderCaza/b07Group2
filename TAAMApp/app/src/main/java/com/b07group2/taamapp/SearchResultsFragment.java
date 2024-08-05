@@ -167,6 +167,7 @@ public class SearchResultsFragment extends Fragment {
                 if (canGoBack()) {
                     goToPreviousPage();
                 } else {
+                    setEnabled(false);
                     requireActivity().onBackPressed();
                 }
             }
