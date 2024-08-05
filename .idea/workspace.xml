@@ -21,14 +21,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="367138ef-ca9a-4593-a241-411fb954ef43" name="Changes" comment="misc">
-      <change afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/FetchMimeTypeCallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/RemoveItemView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/FetchMimeTypeTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/FetchMimeTypeTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/HomeAdminFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/HomeAdminFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/HomeFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ItemDetailedPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ItemDetailedPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_item_detailed_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/res/layout/activity_item_detailed_view.xml" afterDir="false" />
+    <list default="true" id="367138ef-ca9a-4593-a241-411fb954ef43" name="Changes" comment="feat: pdf generation implemented without image presentation">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ReportFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ReportFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,9 +118,10 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
-    "git-widget-placeholder": "Merging feature/SCRUM-12/report-screen",
+    "git-widget-placeholder": "feature/SCRUM-12/report-screen",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/leopard1566/Documents/GitHub/b07Group2"
+    "last_opened_file_path": "/Users/leopard1566/Documents/GitHub/b07Group2",
+    "settings.editor.selected.configurable": "inlay.hints"
   }
 }]]></component>
   <component name="RunManager">
@@ -241,6 +237,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="misc" />
-    <option name="LAST_COMMIT_MESSAGE" value="misc" />
+    <MESSAGE value="feat: pdf generation implemented without image presentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: pdf generation implemented without image presentation" />
   </component>
 </project>
