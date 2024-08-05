@@ -79,8 +79,10 @@ public class ItemDetailedPresenter implements FetchMimeTypeCallback {
     public void onMimeTypeFetched(Uri media, String mimeType) {
         if (mimeType != null && mimeType.startsWith("image")) {
             view.addPicture(media.toString());
+
         } else if (mimeType != null && mimeType.startsWith("video")) {
             view.addVideo(media.toString());
+
         } else {
             view.showWarning("Media type not supported");
         }
