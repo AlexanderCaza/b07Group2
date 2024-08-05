@@ -25,7 +25,7 @@ import java.util.List;
 public abstract class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private BoxAdapter boxAdapter;
+    protected BoxAdapter boxAdapter;
     private int currentPage = 0;
     private static final int PAGE_SIZE = 4; //boxes per page
     private CollectionsDatabase collectionsDatabase;
