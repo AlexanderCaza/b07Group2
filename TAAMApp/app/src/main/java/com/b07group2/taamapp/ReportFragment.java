@@ -149,5 +149,6 @@ public class ReportFragment extends Fragment {
 
         document.close();
         Toast.makeText(getContext(),"Pdf saved to downloads folder",Toast.LENGTH_LONG).show();
+
     }
 }

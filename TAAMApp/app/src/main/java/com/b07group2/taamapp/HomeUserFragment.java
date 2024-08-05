@@ -31,7 +31,7 @@ public class HomeUserFragment extends HomeFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
 
-        Button buttonAdmin = view.findViewById(R.id.buttonAdmin);
+        Button buttonAdmin = view.findViewById(R.id.buttonReport);
 
         buttonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +40,8 @@ public class HomeUserFragment extends HomeFragment {
                 //put fragment name here instead of BlankFragment
             }
         });
-
-        return  super.onCreateView(inflater, container, savedInstanceState, view);
+        //TODO: uncomment when committing
+        //return  super.onCreateView(inflater, container, savedInstanceState, view);
+        return view;
     }
 }
