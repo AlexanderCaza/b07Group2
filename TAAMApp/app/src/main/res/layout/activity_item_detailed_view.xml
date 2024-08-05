@@ -19,7 +19,7 @@
         android:padding="16dp"
         android:scrollbars="vertical"
         app:barrierMargin="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/item_back_button"
+        app:layout_constraintBottom_toTopOf="@+id/button_linear_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -162,16 +162,26 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/item_back_button"
+
+    <LinearLayout
+        android:id="@+id/button_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/back_button_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_scroll_view" />
+        app:layout_constraintTop_toBottomOf="@+id/item_scroll_view"
+        android:layout_marginBottom="32dp">
+
+        <Button
+            android:id="@+id/item_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/back_button_label" />
+    </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
