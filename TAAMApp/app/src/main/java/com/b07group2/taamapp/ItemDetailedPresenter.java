@@ -8,7 +8,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemDetailedPresenter {
+public class ItemDetailedPresenter implements FetchMimeTypeCallback {
     ItemDetailedView view;
     ArrayList<ItemCollection> items;
 
@@ -67,9 +67,20 @@ public class ItemDetailedPresenter {
             List<Uri> medias = ItemCollection.mediaToUri(item.getMedia());
 
             for (Uri media : medias) {
-                new FetchMimeTypeTask(media, view).execute(media.toString());
+                new FetchMimeTypeTask(media, this).execute(media.toString());
             }
 
         });
+    }
+
+    @Override
+    public void onMimeTypeFetched(Uri media, String mimeType) {
+        if (mimeType != null && mimeType.startsWith("image")) {
+            view.addPicture(media.toString());
+        } else if (mimeType != null && mimeType.startsWith("video")) {
+            view.addVideo(media.toString());
+        } else {
+            view.showWarning("Media type not supported");
+        }
     }
 }

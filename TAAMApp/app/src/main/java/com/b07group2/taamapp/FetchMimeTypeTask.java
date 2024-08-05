@@ -12,11 +12,11 @@ import com.b07group2.taamapp.ItemDetailedView;
 
 public class FetchMimeTypeTask extends AsyncTask<String, Void, String> {
     private Uri media;
-    private ItemDetailedView view;
+    private FetchMimeTypeCallback callback;
 
-    public FetchMimeTypeTask(Uri media, ItemDetailedView view) {
+    public FetchMimeTypeTask(Uri media, FetchMimeTypeCallback callback) {
         this.media = media;
-        this.view = view;
+        this.callback = callback;
     }
 
     @Override
@@ -36,13 +36,8 @@ public class FetchMimeTypeTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String mimeType) {
         Log.w("FetchMimeTypeTask", "Media: " + media.toString() + " " + mimeType);
-
-        if (mimeType != null && mimeType.startsWith("image")) {
-            view.addPicture(media.toString());
-        } else if (mimeType != null && mimeType.startsWith("video")) {
-            view.addVideo(media.toString());
-        } else {
-            view.showWarning("Media type not supported");
+        if (callback != null) {
+            callback.onMimeTypeFetched(media, mimeType);
         }
     }
 }
