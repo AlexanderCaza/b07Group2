@@ -22,26 +22,31 @@ import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.lang3.SerializationUtils;
 
-public abstract class SearchQueryFragment extends Fragment implements
-        AdapterView.OnItemSelectedListener {
+public class SearchQueryFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState, View view) {
+                             @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.search_query_fragment, container, false);
+
         Button buttonSearch = view.findViewById(R.id.searchButton);
         EditText lotNumberField = view.findViewById(R.id.searchLotNumberField);
         EditText nameField = view.findViewById(R.id.searchNameField);
-        EditText descriptionField = view.findViewById(R.id.item_description);
 
 
         Spinner categoriesSpinner = view.findViewById(R.id.searchSpinnerCategory);
-        categoriesSpinner.setOnItemSelectedListener(this);
         Spinner periodsSpinner = view.findViewById(R.id.searchSpinnerPeriod);
-        periodsSpinner.setOnItemSelectedListener(this);
+
+        List<String> categories = new ArrayList<>(Arrays.asList(ItemCollection.getValidCategories()));
+        List<String> periods = new ArrayList<>(Arrays.asList(ItemCollection.getValidPeriods()));
+
+        categories.add(0, ""); // Adds empty string at the beginning
+        periods.add(0, ""); // Adds empty string at the beginning
 
         // Adding the dropdown options for Categories Spinner
         ArrayAdapter<String> categoryOptions = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
-                ItemCollection.getValidCategories());
+                categories);
         categoryOptions.setDropDownViewResource(
                 android.R.layout
                         .simple_spinner_dropdown_item);
@@ -49,11 +54,14 @@ public abstract class SearchQueryFragment extends Fragment implements
 
         // Adding the dropdown options for Periods Spinner
         ArrayAdapter<String> periodOptions = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
-                ItemCollection.getValidPeriods());
-        categoryOptions.setDropDownViewResource(
+                periods);
+        periodOptions.setDropDownViewResource(
                 android.R.layout
                         .simple_spinner_dropdown_item);
-        categoriesSpinner.setAdapter(periodOptions);
+        periodsSpinner.setAdapter(periodOptions);
+
+        categoriesSpinner.setOnItemSelectedListener(this);
+        periodsSpinner.setOnItemSelectedListener(this);
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -61,9 +69,16 @@ public abstract class SearchQueryFragment extends Fragment implements
                         nameField.getText().toString(),
                         categoriesSpinner.getSelectedItem().toString(),
                         periodsSpinner.getSelectedItem().toString(),
-                        descriptionField.getText().toString(), "");
+                        "", "");
+
                         byte[] data = SerializationUtils.serialize(query);
-                        savedInstanceState.putByteArray("searchresults", data);
+
+                        Fragment searchResultsFragment = new SearchResultsFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putByteArray("searchresults", data);
+                        searchResultsFragment.setArguments(bundle);
+
+                        loadFragment(searchResultsFragment);
 
                 // loadFragment((new SearchResultsFragment(@NonNull LayoutInflater inflater,
                 //        @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View view)));
@@ -73,9 +88,21 @@ public abstract class SearchQueryFragment extends Fragment implements
         return view;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String item = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        Toast.makeText(parent.getContext(), "Nothing Selected", Toast.LENGTH_SHORT).show();
+    }
+
+
     protected void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.view, fragment);
+        transaction.replace(R.id.fragment_home_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
