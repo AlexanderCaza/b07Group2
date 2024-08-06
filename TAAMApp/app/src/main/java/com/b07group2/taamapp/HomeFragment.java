@@ -154,9 +154,15 @@ public abstract class HomeFragment extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                Fragment currentFragment = getParentFragmentManager().findFragmentById(R.id.fragment_home_container);
+
                 if (canGoBack()) {
                     goToPreviousPage();
-                } else {
+                }
+                else if (currentFragment instanceof HomeAdminFragment){
+                    loadFragment(new HomeUserFragment());
+                }
+                else {
                     requireActivity().onBackPressed();
                 }
             }
