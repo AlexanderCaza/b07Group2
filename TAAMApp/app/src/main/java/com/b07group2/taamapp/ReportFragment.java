@@ -569,9 +569,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                                 try {
                                     createPdf(document, i.getLotNumber(), i.getName(), i.getCategory(),
                                             i.getPeriod(), i.getDescription(), imageList[0]);
-                                } catch (FileNotFoundException e) {
-                                    throw new RuntimeException(e);
-                                } catch (MalformedURLException e) {
+                                } catch (FileNotFoundException | MalformedURLException e) {
                                     throw new RuntimeException(e);
                                 }
 
