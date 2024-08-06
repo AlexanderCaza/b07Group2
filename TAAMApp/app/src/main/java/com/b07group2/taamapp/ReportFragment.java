@@ -538,6 +538,9 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
             @Override
             public synchronized void onClick(View v) {
                 try{
+                    if(items==null){
+                        return;
+                    }
                     Document document = new Document(setPdf());
                     int totalTasks = items.size();
                     final int[] completedTasks = {0};
