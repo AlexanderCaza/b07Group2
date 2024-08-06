@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.0"
+itext7Core = "7.1.15"
 junit = "4.13.2"
 mockito = "5.0.0"
 junitVersion = "1.2.1"
@@ -14,6 +15,7 @@ recyclerview = "1.3.0"
 firebaseDatabase = "21.0.0"
 
 [libraries]
+itext7-core = { module = "com.itextpdf:itext7-core", version.ref = "itext7Core" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

@@ -68,23 +68,25 @@ public class ItemDetailedPresenter implements FetchMimeTypeCallback {
 
             List<Uri> medias = ItemCollection.mediaToUri(item.getMedia());
 
-            for (Uri media : medias) {
-                new FetchMimeTypeTask(media, this).execute(media.toString());
-            }
+            ArrayList<Uri> mediaList = new ArrayList<Uri>(medias);
+
+            new FetchMimeTypeTask(mediaList, this).execute();
 
         });
     }
 
     @Override
-    public void onMimeTypeFetched(Uri media, String mimeType) {
-        if (mimeType != null && mimeType.startsWith("image")) {
-            view.addPicture(media.toString());
+    public void onMimeTypeFetched(ArrayList<Uri> mediaList, ArrayList<String> mimeTypes) {
+        for (int i = 0; i < mediaList.size(); i++) {
+            if (mimeTypes.get(i) != null && mimeTypes.get(i).startsWith("image")) {
+                view.addPicture(mediaList.get(i).toString());
 
-        } else if (mimeType != null && mimeType.startsWith("video")) {
-            view.addVideo(media.toString());
+            } else if (mimeTypes.get(i) != null && mimeTypes.get(i).startsWith("video")) {
+                view.addVideo(mediaList.get(i).toString());
 
-        } else {
-            view.showWarning("Media type not supported");
+            } else {
+                view.showWarning("Media type not supported");
+            }
         }
     }
 

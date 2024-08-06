@@ -9,6 +9,9 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -16,24 +19,29 @@ import java.util.List;
 
 public class HomeUserFragment extends HomeFragment {
 
+    private RecyclerView recyclerView;
+    private BoxAdapter boxAdapter;
+    private int currentPage = 0;
+    private static final int PAGE_SIZE = 5; //boxes per page
+    private List<String> boxList;
+    private List<List<String>> boxListHistory = new ArrayList<>(); //keep history of previous pages
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        admin = false;
-
-        View view = super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
 
         Button buttonAdmin = view.findViewById(R.id.buttonReport);
 
         buttonAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Switching to fragment","home admin");
                 loadFragment(new AdminLoginFragment());
                 //put fragment name here instead of BlankFragment
             }
         });
-
+        //TODO: uncomment when committing
+        //return  super.onCreateView(inflater, container, savedInstanceState, view);
         return view;
     }
 }

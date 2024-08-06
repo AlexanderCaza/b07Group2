@@ -32,7 +32,7 @@ public class HomeAdminFragment extends HomeFragment {
         buttonReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new BlankFragment());
+                loadFragment(new ReportFragment());
                 //put fragment name here instead of BlankFragment
             }
         });

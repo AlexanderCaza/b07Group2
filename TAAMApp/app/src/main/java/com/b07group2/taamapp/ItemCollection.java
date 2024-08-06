@@ -132,6 +132,9 @@ public class ItemCollection implements Serializable {
 
     public static List<Uri> mediaToUri(List<String> strings) {
         ArrayList<Uri> uriMedia = new ArrayList<Uri>();
+        if(strings==null){
+            return null;
+        }
         for (String string : strings) {
             uriMedia.add(Uri.parse(string));
         }
