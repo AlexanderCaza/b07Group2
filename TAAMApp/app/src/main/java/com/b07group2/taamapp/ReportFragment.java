@@ -1,10 +1,12 @@
 package com.b07group2.taamapp;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +15,29 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.AreaBreak;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ReportFragment extends Fragment {
+public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
+    private static final Logger log = LoggerFactory.getLogger(ReportFragment.class);
     ArrayList<ItemCollection> items;
 
     private static final String[] validCategories = {"Jade", "Paintings", "Calligraphy", "Rubbings",
@@ -156,8 +168,28 @@ public class ReportFragment extends Fragment {
 
                     for(ItemCollection i:items){
                         if(i.getLotNumber()==lotNum){
+                            List<Uri> imageList = new ArrayList<Uri>();
+                            List<Uri> mediaList = new ArrayList<Uri>();
+                            if(i.getMedia()!=null){
+                                mediaList = ItemCollection.mediaToUri(i.getMedia());
+                            }
+                            for (Uri media : mediaList) {
+                                new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
+                                    @Override
+                                    public void onMimeTypeFetched(Uri media, String mimeType) {
+                                    }
+                                    @Override
+                                    public void onMimeTypeFetched(Uri media, String mimeType, List<Uri> imageList) {
+                                        if (mimeType != null && mimeType.startsWith("image")) {
+                                            imageList.add(media);
+                                        }
+                                    }
+                                }).execute(media.toString());
+                                Log.w("reportFragment", "imageList: " + imageList);
+                            }
+
                             createPdf(document,lotNum,i.getName(),i.getCategory(),
-                                    i.getPeriod(),i.getDescription(),"Media comes Here");
+                                    i.getPeriod(),i.getDescription(),imageList);
                             break;
                         }
                     }
@@ -166,6 +198,8 @@ public class ReportFragment extends Fragment {
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
                 catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -198,15 +232,33 @@ public class ReportFragment extends Fragment {
 
                     for(ItemCollection i:items){
                         if(i.getName().equals(name)){
+                            List<Uri> imageList = new ArrayList<Uri>();
+                            List<Uri> mediaList = new ArrayList<Uri>();
+                            if(i.getMedia()!=null){
+                                mediaList = ItemCollection.mediaToUri(i.getMedia());
+                            }
+                            for (Uri media : mediaList) {
+                                new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
+                                    @Override
+                                    public void onMimeTypeFetched(Uri media, String mimeType) {
+                                    }
+                                    @Override
+                                    public void onMimeTypeFetched(Uri media, String mimeType, List<Uri> imageList) {
+                                        if (mimeType != null && mimeType.startsWith("image")) {
+                                            imageList.add(media);
+                                        }
+                                    }
+                                }).execute(media.toString());
+                            }
                             createPdf(document,i.getLotNumber(),name,i.getCategory(),
-                                    i.getPeriod(),i.getDescription(),"Media comes Here");
+                                    i.getPeriod(),i.getDescription(),imageList);
                         }
                     }
 
                     document.close();
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
-                catch(FileNotFoundException e){
+                catch(FileNotFoundException | MalformedURLException e){
                     throw new RuntimeException(e);
                 }
             }
@@ -239,8 +291,28 @@ public class ReportFragment extends Fragment {
 
                     for(ItemCollection i:items){
                         if(i.getCategory().equals(category)){
+                            List<Uri> imageList = new ArrayList<Uri>();
+                            List<Uri> mediaList = new ArrayList<Uri>();
+                            if(i.getMedia()!=null){
+                                 mediaList = ItemCollection.mediaToUri(i.getMedia());
+                            }
+                            if(mediaList!=null){
+                                for (Uri media : mediaList) {
+                                    new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
+                                        @Override
+                                        public void onMimeTypeFetched(Uri media, String mimeType) {
+                                        }
+                                        @Override
+                                        public void onMimeTypeFetched(Uri media, String mimeType, List<Uri> imageList) {
+                                            if (mimeType != null && mimeType.startsWith("image")) {
+                                                imageList.add(media);
+                                            }
+                                        }
+                                    }).execute(media.toString());
+                                }
+                            }
                             createPdf(document,i.getLotNumber(),i.getName(),category,
-                                    i.getPeriod(),i.getDescription(),"Media comes Here");
+                                    i.getPeriod(),i.getDescription(),imageList);
                         }
                     }
 
@@ -248,6 +320,8 @@ public class ReportFragment extends Fragment {
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
                 catch(FileNotFoundException e){
+                    throw new RuntimeException(e);
+                } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -280,8 +354,25 @@ public class ReportFragment extends Fragment {
 
                     for(ItemCollection i:items){
                         if(i.getCategory().equals(category)){
+                            List<Uri> mediaList = ItemCollection.mediaToUri(i.getMedia());
+                            List<Uri> imageList = new ArrayList<Uri>();
+                            if(mediaList!=null){
+                                for (Uri media : mediaList) {
+                                    new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
+                                        @Override
+                                        public void onMimeTypeFetched(Uri media, String mimeType) {
+                                        }
+                                        @Override
+                                        public void onMimeTypeFetched(Uri media, String mimeType, List<Uri> imageList) {
+                                            if (mimeType != null && mimeType.startsWith("image")) {
+                                                imageList.add(media);
+                                            }
+                                        }
+                                    }).execute(media.toString());
+                                }
+                            }
                             createPdf(document,-901232342,"","",
-                                    "",i.getDescription(),"Media comes Here");
+                                    "",i.getDescription(),imageList);
                         }
                     }
 
@@ -289,6 +380,8 @@ public class ReportFragment extends Fragment {
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
                 catch(FileNotFoundException e){
+                    throw new RuntimeException(e);
+                } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -321,8 +414,23 @@ public class ReportFragment extends Fragment {
 
                     for(ItemCollection i:items){
                         if(i.getPeriod().equals(period)){
+                            List<Uri> mediaList = ItemCollection.mediaToUri(i.getMedia());
+                            List<Uri> imageList = new ArrayList<Uri>();
+                            for (Uri media : mediaList) {
+                                new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
+                                    @Override
+                                    public void onMimeTypeFetched(Uri media, String mimeType) {
+                                    }
+                                    @Override
+                                    public void onMimeTypeFetched(Uri media, String mimeType, List<Uri> imageList) {
+                                        if (mimeType != null && mimeType.startsWith("image")) {
+                                            imageList.add(media);
+                                        }
+                                    }
+                                }).execute(media.toString());
+                            }
                             createPdf(document,i.getLotNumber(),i.getName(),i.getCategory(),
-                                    period,i.getDescription(),"Media comes Here");
+                                    period,i.getDescription(),imageList);
                         }
                     }
 
@@ -330,6 +438,8 @@ public class ReportFragment extends Fragment {
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
                 catch(FileNotFoundException e){
+                    throw new RuntimeException(e);
+                } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -362,8 +472,23 @@ public class ReportFragment extends Fragment {
 
                     for(ItemCollection i:items){
                         if(i.getPeriod().equals(period)){
+                            List<Uri> mediaList = ItemCollection.mediaToUri(i.getMedia());
+                            List<Uri> imageList = new ArrayList<Uri>();
+                            for (Uri media : mediaList) {
+                                new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
+                                    @Override
+                                    public void onMimeTypeFetched(Uri media, String mimeType) {
+                                    }
+                                    @Override
+                                    public void onMimeTypeFetched(Uri media, String mimeType, List<Uri> imageList) {
+                                        if (mimeType != null && mimeType.startsWith("image")) {
+                                            imageList.add(media);
+                                        }
+                                    }
+                                }).execute(media.toString());
+                            }
                             createPdf(document,-901232342,"","",
-                                    "",i.getDescription(),"Media comes Here");
+                                    "",i.getDescription(),imageList);
                         }
                     }
 
@@ -371,6 +496,8 @@ public class ReportFragment extends Fragment {
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
                 catch(FileNotFoundException e){
+                    throw new RuntimeException(e);
+                } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -383,14 +510,31 @@ public class ReportFragment extends Fragment {
                     Document document = new Document(setPdf());
 
                     for(ItemCollection i:items){
+                        List<Uri> mediaList = ItemCollection.mediaToUri(i.getMedia());
+                        List<Uri> imageList = new ArrayList<Uri>();
+                        for (Uri media : mediaList) {
+                            new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
+                                @Override
+                                public void onMimeTypeFetched(Uri media, String mimeType) {
+                                }
+                                @Override
+                                public void onMimeTypeFetched(Uri media, String mimeType, List<Uri> imageList) {
+                                    if (mimeType != null && mimeType.startsWith("image")) {
+                                        imageList.add(media);
+                                    }
+                                }
+                            }).execute(media.toString());
+                        }
                         createPdf(document,i.getLotNumber(),i.getName(),i.getCategory(),
-                                    i.getPeriod(),i.getDescription(),"Media comes Here");
+                                    i.getPeriod(),i.getDescription(),imageList);
                     }
 
                     document.close();
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
                 catch(FileNotFoundException e){
+                    throw new RuntimeException(e);
+                } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -403,14 +547,31 @@ public class ReportFragment extends Fragment {
                     Document document = new Document(setPdf());
 
                     for(ItemCollection i:items){
+                        List<Uri> mediaList = ItemCollection.mediaToUri(i.getMedia());
+                        List<Uri> imageList = new ArrayList<Uri>();
+                        for (Uri media : mediaList) {
+                            new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
+                                @Override
+                                public void onMimeTypeFetched(Uri media, String mimeType) {
+                                }
+                                @Override
+                                public void onMimeTypeFetched(Uri media, String mimeType, List<Uri> imageList) {
+                                    if (mimeType != null && mimeType.startsWith("image")) {
+                                        imageList.add(media);
+                                    }
+                                }
+                            }).execute(media.toString());
+                        }
                         createPdf(document,-901232342,"","",
-                                "",i.getDescription(),"Media comes Here");
+                                "",i.getDescription(),imageList);
                     }
 
                     document.close();
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
                 catch(FileNotFoundException e){
+                    throw new RuntimeException(e);
+                } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -420,7 +581,7 @@ public class ReportFragment extends Fragment {
 
     //adds pages given the document and data
     private void createPdf(Document reportDocument, int lotnumber, String name, String category,
-                           String period, String itemDescription, String media) throws FileNotFoundException{
+                           String period, String itemDescription, List<Uri> imageList) throws FileNotFoundException, MalformedURLException {
         Document document = reportDocument;
 
         String lotNumber = Integer.toString(lotnumber);
@@ -447,8 +608,12 @@ public class ReportFragment extends Fragment {
         Paragraph descriptionP = new Paragraph(description);
         document.add(descriptionP.setFontSize(20).setItalic());
 
-        Paragraph mediaP = new Paragraph(media);
-        document.add(mediaP);
+        if(imageList!=null){
+            for(Uri image : imageList){
+                Image insert = new Image(ImageDataFactory.create(Uri.encode(image.toString())));
+                document.add(insert);
+            }
+        }
 
         document.add(new AreaBreak());
     }
@@ -459,5 +624,15 @@ public class ReportFragment extends Fragment {
         File file = new File(pdfPath,"TAAM_Report.pdf");
         PdfWriter writer = new PdfWriter(file);
         return new PdfDocument(writer);
+    }
+
+    @Override
+    public void onMimeTypeFetched(Uri media, String mimeType) {
+    }
+    @Override
+    public void onMimeTypeFetched(Uri media, String mimeType,List<Uri> imageList) {
+        if (mimeType != null && mimeType.startsWith("image")) {
+            imageList.add(media);
+        }
     }
 }

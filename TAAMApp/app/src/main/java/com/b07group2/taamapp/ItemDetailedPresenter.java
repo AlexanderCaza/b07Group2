@@ -87,6 +87,8 @@ public class ItemDetailedPresenter implements FetchMimeTypeCallback {
             view.showWarning("Media type not supported");
         }
     }
+    @Override
+    public void onMimeTypeFetched(Uri media, String mimeType, List<Uri> imageList){}
 
     public ItemCollection getItem() {
         return item;
