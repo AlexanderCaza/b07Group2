@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
+public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
     ArrayList<ItemCollection> items;
 
     private static final String[] validCategories = {"Jade", "Paintings", "Calligraphy", "Rubbings",
@@ -61,7 +62,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
         CollectionsDatabase.getCollections(collectionsList -> {
             items = collectionsList;
             if (items == null) {
-                Toast.makeText(getContext(),"Empty DB",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Empty DB", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -70,9 +71,9 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
         autoCC = view.findViewById(R.id.autoCC);
         adapterC = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.list_item, validCategories);
         autoCC.setAdapter(adapterC);
-        autoCC.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        autoCC.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
                 Toast.makeText(getActivity().getApplicationContext(), "Category: " + item, Toast.LENGTH_SHORT).show();
 
@@ -82,9 +83,9 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
         autoCCDP = view.findViewById(R.id.autoCCDP);
         adapterCDP = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.list_item, validCategories);
         autoCCDP.setAdapter(adapterCDP);
-        autoCCDP.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        autoCCDP.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
                 Toast.makeText(getActivity().getApplicationContext(), "Category: " + item, Toast.LENGTH_SHORT).show();
 
@@ -94,9 +95,9 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
         autoCP = view.findViewById(R.id.autoCP);
         adapterP = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.list_item, validPeriods);
         autoCP.setAdapter(adapterP);
-        autoCP.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        autoCP.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
                 Toast.makeText(getActivity().getApplicationContext(), "Period: " + item, Toast.LENGTH_SHORT).show();
 
@@ -106,9 +107,9 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
         autoCPDP = view.findViewById(R.id.autoCPDP);
         adapterPDP = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.list_item, validPeriods);
         autoCPDP.setAdapter(adapterPDP);
-        autoCPDP.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        autoCPDP.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
                 Toast.makeText(getActivity().getApplicationContext(), "Period: " + item, Toast.LENGTH_SHORT).show();
 
@@ -537,12 +538,14 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
         RADPButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public synchronized void onClick(View v) {
-                try{
+                try {
                     Document document = new Document(setPdf());
                     int totalTasks = items.size();
                     final int[] completedTasks = {0};
 
-                    for(ItemCollection i:items){
+                    Log.w("ReportFragment", "Total tasks: " + totalTasks);
+
+                    for (ItemCollection i : items) {
                         ArrayList<Uri> mediaList = (ArrayList<Uri>) ItemCollection.mediaToUri(i.getMedia());
                         final List<Uri>[] imageList = new List[]{new ArrayList<Uri>()};
 
@@ -550,19 +553,30 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                             @Override
                             public void onMimeTypeFetched(ArrayList<Uri> mediaList, ArrayList<String> mimeTypes) {
 
-                                if(mediaList!=null){
+                                if (mediaList != null) {
                                     for (int media_i = 0; media_i < mediaList.size(); media_i++) {
                                         if (mimeTypes.get(media_i) != null && mimeTypes.get(media_i).startsWith("image")) {
                                             imageList[0].add(mediaList.get(media_i));
                                         }
                                     }
+                                } else {
+                                    imageList[0] = null;
                                 }
-                                else{
-                                    imageList[0] =null;}
+
+                                try {
+                                    createPdf(document, i.getLotNumber(), i.getName(), i.getCategory(),
+                                            i.getPeriod(), i.getDescription(), imageList[0]);
+                                } catch (FileNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                } catch (MalformedURLException e) {
+                                    throw new RuntimeException(e);
+                                }
 
                                 synchronized (completedTasks) {
                                     completedTasks[0]++;
+                                    Log.w("ReportFragment", "Completed tasks: " + completedTasks[0]);
                                     if (completedTasks[0] == totalTasks) {
+                                        Log.w("ReportFragment", "All tasks completed");
                                         document.close();
                                         Toast.makeText(getContext(), "PDF saved to downloads folder", Toast.LENGTH_LONG).show();
                                     }
@@ -571,14 +585,12 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                             }
                         }).execute();
 
-                        createPdf(document,i.getLotNumber(),i.getName(),i.getCategory(),
-                                i.getPeriod(),i.getDescription(), imageList[0]);
+
                     }
 
-                    document.close();
-                    Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
-                }
-                catch(FileNotFoundException | MalformedURLException e){
+//                    document.close();
+//                    Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
+                } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -589,13 +601,16 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
     //adds pages given the document and data
     private void createPdf(Document document, int lotnumber, String name, String category,
                            String period, String itemDescription, List<Uri> imageList) throws FileNotFoundException, MalformedURLException {
-        
+
+        Log.w("ReportFragment", "Creating PDF for lot number: " + lotnumber);
+        Log.w("ReportFragment", "Creating PDF with images: " + imageList);
+
         String lotNumber = Integer.toString(lotnumber);
-        if(lotnumber==-901232342){
+        if (lotnumber == -901232342) {
             lotNumber = "";
         }
         String description = itemDescription;
-        if(description.isEmpty()){
+        if (description.isEmpty()) {
             description = "There is no description for this item";
         }
 
@@ -614,8 +629,8 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
         Paragraph descriptionP = new Paragraph(description);
         document.add(descriptionP.setFontSize(20).setItalic());
 
-        if(imageList!=null){
-            for(Uri image : imageList){
+        if (imageList != null) {
+            for (Uri image : imageList) {
                 Image insert = new Image(ImageDataFactory.create(Uri.encode(image.toString())));
                 document.add(insert);
             }
@@ -627,7 +642,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
     //creates a canvas for document creation
     private PdfDocument setPdf() throws FileNotFoundException {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
-        File file = new File(pdfPath,"TAAM_Report.pdf");
+        File file = new File(pdfPath, "TAAM_Report.pdf");
         PdfWriter writer = new PdfWriter(file);
         return new PdfDocument(writer);
     }
