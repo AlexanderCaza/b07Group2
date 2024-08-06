@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -554,12 +555,12 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                         new FetchMimeTypeTask(mediaList, new FetchMimeTypeCallback() {
                             @Override
                             public void onMimeTypeFetched(ArrayList<Uri> mediaList, ArrayList<String> mimeTypes) {
-                                ArrayList<Uri> imageRefList = new ArrayList<>();
+                                ArrayList<Pair<Uri, String>> imageRefList = new ArrayList<>();
 
                                 if (mediaList != null) {
                                     for (int media_i = 0; media_i < mediaList.size(); media_i++) {
                                         if (mimeTypes.get(media_i) != null && mimeTypes.get(media_i).startsWith("image")) {
-                                            imageRefList.add(mediaList.get(media_i));
+                                            imageRefList.add(new Pair<>(mediaList.get(media_i), mimeTypes.get(media_i)));
                                         }
                                     }
                                 } else {

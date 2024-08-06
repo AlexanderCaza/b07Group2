@@ -4,6 +4,7 @@ package com.b07group2.taamapp;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.Pair;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -21,11 +22,12 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class DownloadImagesTask extends AsyncTask<Void, Void, List<Image>> {
-    private ArrayList<Uri> imageRefs;
+    private ArrayList<Pair<Uri, String>> imageRefs;
     private DownloadImagesCallback callback;
 
-    public DownloadImagesTask(ArrayList<Uri> imageUris, DownloadImagesCallback callback) {
-        this.imageRefs = imageUris;
+    public DownloadImagesTask(ArrayList<Pair<Uri, String>> imageRefs, DownloadImagesCallback callback) {
+        // imageRefs is a pair of Uri and Mime type
+        this.imageRefs = imageRefs;
         this.callback = callback;
     }
 
@@ -34,10 +36,14 @@ public class DownloadImagesTask extends AsyncTask<Void, Void, List<Image>> {
         List<Image> images = new ArrayList<>();
         if (imageRefs == null || imageRefs.isEmpty()) return null;
 
-        for (Uri uri : imageRefs) {
+        for (Pair<Uri, String> ref : imageRefs) {
+
+            // get ext of file
+            String ext = ref.second.substring(ref.second.lastIndexOf("/") + 1);
+
             try {
-                File localFile = File.createTempFile("images", "jpg");
-                StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri.toString());
+                File localFile = File.createTempFile("images", ext);
+                StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(ref.first.toString());
 
                 Task<FileDownloadTask.TaskSnapshot> downloadTask = storageRef.getFile(localFile);
 
@@ -53,7 +59,7 @@ public class DownloadImagesTask extends AsyncTask<Void, Void, List<Image>> {
                     Image image = new Image(ImageDataFactory.create(localFile.getAbsolutePath()));
                     images.add(image);
                 } else {
-                    Log.e("DownloadImagesTask", "Failed to download image: " + uri.toString());
+                    Log.e("DownloadImagesTask", "Failed to download image: " + ref.first.toString());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
