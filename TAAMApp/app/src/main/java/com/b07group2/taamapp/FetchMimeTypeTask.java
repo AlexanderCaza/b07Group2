@@ -42,7 +42,6 @@ public class FetchMimeTypeTask extends AsyncTask<Void, Void, ArrayList<String>> 
 
     @Override
     protected void onPostExecute(ArrayList<String> mimeTypes) {
-        Log.w("FetchMimeTypeTask", "MediaList: " + mediaList.toString() + " " + mimeTypes);
         if (callback != null) {
             callback.onMimeTypeFetched(mediaList, mimeTypes);
         }

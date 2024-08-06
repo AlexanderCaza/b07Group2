@@ -21,10 +21,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="367138ef-ca9a-4593-a241-411fb954ef43" name="Changes" comment="misc">
+    <list default="true" id="367138ef-ca9a-4593-a241-411fb954ef43" name="Changes" comment="bug: no pages in pdf document">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/FetchMimeTypeTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/FetchMimeTypeTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ItemCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ItemCollection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ReportFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ReportFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +120,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Android App.app.executor": "Debug",
+    "Android App.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
@@ -251,7 +250,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722911260556</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="bug: no pages in pdf document">
+      <option name="closed" value="true" />
+      <created>1722920649675</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1722920649675</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -282,17 +289,7 @@
     <MESSAGE value="bug: async not populating imageList[]" />
     <MESSAGE value="fix: added guards for nullObjectReference error thrown within the mediaList" />
     <MESSAGE value="misc" />
-    <option name="LAST_COMMIT_MESSAGE" value="misc" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/TAAMApp/app/src/main/java/com/b07group2/taamapp/ReportFragment.java</url>
-          <line>562</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="bug: no pages in pdf document" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug: no pages in pdf document" />
   </component>
 </project>

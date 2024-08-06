@@ -536,7 +536,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
 
         RADPButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public synchronized void onClick(View v) {
                 try{
                     Document document = new Document(setPdf());
                     int totalTasks = items.size();
@@ -544,27 +544,21 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
 
                     for(ItemCollection i:items){
                         ArrayList<Uri> mediaList = (ArrayList<Uri>) ItemCollection.mediaToUri(i.getMedia());
+                        final List<Uri>[] imageList = new List[]{new ArrayList<Uri>()};
 
                         new FetchMimeTypeTask(mediaList, new FetchMimeTypeCallback() {
                             @Override
                             public void onMimeTypeFetched(ArrayList<Uri> mediaList, ArrayList<String> mimeTypes) {
-                                List<Uri> imageList = new ArrayList<Uri>();
 
                                 if(mediaList!=null){
                                     for (int media_i = 0; media_i < mediaList.size(); media_i++) {
                                         if (mimeTypes.get(media_i) != null && mimeTypes.get(media_i).startsWith("image")) {
-                                            imageList.add(mediaList.get(media_i));
+                                            imageList[0].add(mediaList.get(media_i));
                                         }
                                     }
                                 }
-
-                                // call createPDF function
-                                try {
-                                    createPdf(document,i.getLotNumber(),i.getName(),i.getCategory(),
-                                            i.getPeriod(),i.getDescription(),imageList);
-                                } catch (FileNotFoundException | MalformedURLException e) {
-                                    throw new RuntimeException(e);
-                                }
+                                else{
+                                    imageList[0] =null;}
 
                                 synchronized (completedTasks) {
                                     completedTasks[0]++;
@@ -577,12 +571,14 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                             }
                         }).execute();
 
+                        createPdf(document,i.getLotNumber(),i.getName(),i.getCategory(),
+                                i.getPeriod(),i.getDescription(), imageList[0]);
                     }
 
                     document.close();
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
-                catch(FileNotFoundException e){
+                catch(FileNotFoundException | MalformedURLException e){
                     throw new RuntimeException(e);
                 }
             }
