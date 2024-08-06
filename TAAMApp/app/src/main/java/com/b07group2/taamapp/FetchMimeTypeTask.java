@@ -22,6 +22,7 @@ public class FetchMimeTypeTask extends AsyncTask<Void, Void, ArrayList<String>> 
 
     @Override
     protected ArrayList<String> doInBackground(Void... voids) {
+        if (mediaList == null || mediaList.get(0) == null)return null;
         ArrayList<String> mimeTypes = new ArrayList<>();
         for (Uri media : mediaList) {
             String mimeType = null;
