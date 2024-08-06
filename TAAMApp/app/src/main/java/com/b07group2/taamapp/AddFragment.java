@@ -160,8 +160,10 @@ public class AddFragment extends Fragment {
                 Log.d("clicked on submit", "Clicked");
                 if(!verifyAllInput())
                     return;
-                if(uploadData()) {
-//                    resetInput();
+                else if (uploadData()) {
+                    resetInput();
+                    Toast.makeText(getContext(), "Item uploaded successfully!",
+                            Toast.LENGTH_SHORT).show();
                 }
 
             }

@@ -114,7 +114,7 @@ public class CollectionsDatabase {
         }
         */
         ItemCollection newItem;
-        if (!toAdd.getMedia().isEmpty()) {
+        if (!(toAdd.getMedia() == null) && !toAdd.getMedia().isEmpty()) {
             newItem = new ItemCollection(toAdd.getLotNumber(), toAdd.getName(),
                     toAdd.getCategory(), toAdd.getPeriod(), toAdd.getDescription(), toAdd.getMedia());
         }
@@ -145,27 +145,27 @@ public class CollectionsDatabase {
                                             String period, String description, String hasMedia) {
         ArrayList<ItemCollection> results = new ArrayList<>();
         for (ItemCollection collection: itemCollections) {
-            if (!lotNumber.isEmpty() &&
+            if ((!lotNumber.isEmpty()) &&
                     !Integer.toString(collection.getLotNumber()).equals(lotNumber)) {
                 continue;
             }
-            else if (!name.isEmpty() &&
+            if (!name.isEmpty() &&
                     !collection.getName().contains(name)) {
                 continue;
             }
-            else if (!category.isEmpty() &&
+            if (!category.isEmpty() &&
                     !collection.getCategory().equals(category)) {
                 continue;
             }
-            else if (!period.isEmpty() &&
+            if (!period.isEmpty() &&
                     !collection.getPeriod().equals(period)) {
                 continue;
             }
-            else if (!description.isEmpty() &&
+            if (!description.isEmpty() &&
                     !collection.getDescription().contains(description)) {
                 continue;
             }
-            else if (!hasMedia.isEmpty() &&
+            if (!hasMedia.isEmpty() &&
                     collection.getMedia().isEmpty()) {
                 continue;
             }

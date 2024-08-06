@@ -57,6 +57,7 @@ public class SearchQuery implements Serializable {
     @Override
     public String toString() {
         String output = "Showing results for: ";
+        if (lotNumber.isEmpty() && name.isEmpty() && category.isEmpty() && period.isEmpty()){output = output + "All collections";};
         if (!lotNumber.isEmpty()) output = output + "Lot Number: " + lotNumber + ", ";
         if (!name.isEmpty()) output = output + "Name: " + name + ", ";
         if (!category.isEmpty()) output = output + "Category: " + category + ", ";
@@ -69,6 +70,6 @@ public class SearchQuery implements Serializable {
     public ArrayList<ItemCollection> getResults() {
         CollectionsDatabase db = new CollectionsDatabase();
         return db.search(this.lotNumber, this.name,
-                this.category, this.description, this.description, this.hasMedia);
+                this.category, this.period, this.description, this.hasMedia);
     }
 }
