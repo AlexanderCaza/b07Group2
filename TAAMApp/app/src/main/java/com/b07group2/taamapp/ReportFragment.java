@@ -354,8 +354,11 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
 
                     for(ItemCollection i:items){
                         if(i.getCategory().equals(category)){
-                            List<Uri> mediaList = ItemCollection.mediaToUri(i.getMedia());
                             List<Uri> imageList = new ArrayList<Uri>();
+                            List<Uri> mediaList = new ArrayList<Uri>();
+                            if(i.getMedia()!=null){
+                                mediaList = ItemCollection.mediaToUri(i.getMedia());
+                            }
                             if(mediaList!=null){
                                 for (Uri media : mediaList) {
                                     new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
@@ -414,8 +417,11 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
 
                     for(ItemCollection i:items){
                         if(i.getPeriod().equals(period)){
-                            List<Uri> mediaList = ItemCollection.mediaToUri(i.getMedia());
                             List<Uri> imageList = new ArrayList<Uri>();
+                            List<Uri> mediaList = new ArrayList<Uri>();
+                            if(i.getMedia()!=null){
+                                mediaList = ItemCollection.mediaToUri(i.getMedia());
+                            }
                             for (Uri media : mediaList) {
                                 new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
                                     @Override
@@ -472,8 +478,11 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
 
                     for(ItemCollection i:items){
                         if(i.getPeriod().equals(period)){
-                            List<Uri> mediaList = ItemCollection.mediaToUri(i.getMedia());
                             List<Uri> imageList = new ArrayList<Uri>();
+                            List<Uri> mediaList = new ArrayList<Uri>();
+                            if(i.getMedia()!=null){
+                                mediaList = ItemCollection.mediaToUri(i.getMedia());
+                            }
                             for (Uri media : mediaList) {
                                 new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
                                     @Override
@@ -510,8 +519,11 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                     Document document = new Document(setPdf());
 
                     for(ItemCollection i:items){
-                        List<Uri> mediaList = ItemCollection.mediaToUri(i.getMedia());
                         List<Uri> imageList = new ArrayList<Uri>();
+                        List<Uri> mediaList = new ArrayList<Uri>();
+                        if(i.getMedia()!=null){
+                            mediaList = ItemCollection.mediaToUri(i.getMedia());
+                        }
                         for (Uri media : mediaList) {
                             new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
                                 @Override
@@ -547,8 +559,11 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                     Document document = new Document(setPdf());
 
                     for(ItemCollection i:items){
-                        List<Uri> mediaList = ItemCollection.mediaToUri(i.getMedia());
                         List<Uri> imageList = new ArrayList<Uri>();
+                        List<Uri> mediaList = new ArrayList<Uri>();
+                        if(i.getMedia()!=null){
+                            mediaList = ItemCollection.mediaToUri(i.getMedia());
+                        }
                         for (Uri media : mediaList) {
                             new FetchMimeTypeTask(media, new FetchMimeTypeCallback() {
                                 @Override
