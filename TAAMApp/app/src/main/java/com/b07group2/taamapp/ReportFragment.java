@@ -166,7 +166,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                     }
 
                     Document document = new Document(setPdf());
-                    int totalTasks = items.size();
+                    int totalTasks = 1;
                     final int[] completedTasks = {0};
 
                     Log.w("ReportFragment", "Total tasks: " + totalTasks);
@@ -253,7 +253,12 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                     }
 
                     Document document = new Document(setPdf());
-                    int totalTasks = items.size();
+                    int totalTasks = 0;
+                    for(ItemCollection i:items){
+                        if(i.getName().equals(name)){
+                            totalTasks++;
+                        }
+                    }
                     final int[] completedTasks = {0};
 
                     Log.w("ReportFragment", "Total tasks: " + totalTasks);
@@ -262,6 +267,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                         if(i.getName().equals(name)){
                             ArrayList<Uri> mediaList = (ArrayList<Uri>) ItemCollection.mediaToUri(i.getMedia());
 
+                            int finalTotalTasks = totalTasks;
                             new FetchMimeTypeTask(mediaList, new FetchMimeTypeCallback() {
                                 @Override
                                 public void onMimeTypeFetched(ArrayList<Uri> mediaList, ArrayList<String> mimeTypes) {
@@ -291,7 +297,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                                             synchronized (completedTasks) {
                                                 completedTasks[0]++;
                                                 Log.w("ReportFragment", "Completed tasks: " + completedTasks[0]);
-                                                if (completedTasks[0] == totalTasks) {
+                                                if (completedTasks[0] == finalTotalTasks) {
                                                     Log.w("ReportFragment", "All tasks completed");
                                                     document.close();
                                                     Toast.makeText(getContext(), "PDF saved to downloads folder", Toast.LENGTH_LONG).show();
@@ -340,7 +346,12 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                     }
 
                     Document document = new Document(setPdf());
-                    int totalTasks = items.size();
+                    int totalTasks = 0;
+                    for(ItemCollection i:items){
+                        if(i.getCategory().equals(category)){
+                            totalTasks++;
+                        }
+                    }
                     final int[] completedTasks = {0};
 
                     Log.w("ReportFragment", "Total tasks: " + totalTasks);
@@ -349,6 +360,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                         if(i.getCategory().equals(category)){
                             ArrayList<Uri> mediaList = (ArrayList<Uri>) ItemCollection.mediaToUri(i.getMedia());
 
+                            int finalTotalTasks = totalTasks;
                             new FetchMimeTypeTask(mediaList, new FetchMimeTypeCallback() {
                                 @Override
                                 public void onMimeTypeFetched(ArrayList<Uri> mediaList, ArrayList<String> mimeTypes) {
@@ -378,7 +390,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                                             synchronized (completedTasks) {
                                                 completedTasks[0]++;
                                                 Log.w("ReportFragment", "Completed tasks: " + completedTasks[0]);
-                                                if (completedTasks[0] == totalTasks) {
+                                                if (completedTasks[0] == finalTotalTasks) {
                                                     Log.w("ReportFragment", "All tasks completed");
                                                     document.close();
                                                     Toast.makeText(getContext(), "PDF saved to downloads folder", Toast.LENGTH_LONG).show();
@@ -427,7 +439,12 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                     }
 
                     Document document = new Document(setPdf());
-                    int totalTasks = items.size();
+                    int totalTasks = 0;
+                    for(ItemCollection i:items){
+                        if(i.getCategory().equals(category)){
+                            totalTasks++;
+                        }
+                    }
                     final int[] completedTasks = {0};
 
                     Log.w("ReportFragment", "Total tasks: " + totalTasks);
@@ -436,6 +453,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                         if(i.getCategory().equals(category)){
                             ArrayList<Uri> mediaList = (ArrayList<Uri>) ItemCollection.mediaToUri(i.getMedia());
 
+                            int finalTotalTasks = totalTasks;
                             new FetchMimeTypeTask(mediaList, new FetchMimeTypeCallback() {
                                 @Override
                                 public void onMimeTypeFetched(ArrayList<Uri> mediaList, ArrayList<String> mimeTypes) {
@@ -465,7 +483,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                                             synchronized (completedTasks) {
                                                 completedTasks[0]++;
                                                 Log.w("ReportFragment", "Completed tasks: " + completedTasks[0]);
-                                                if (completedTasks[0] == totalTasks) {
+                                                if (completedTasks[0] == finalTotalTasks) {
                                                     Log.w("ReportFragment", "All tasks completed");
                                                     document.close();
                                                     Toast.makeText(getContext(), "PDF saved to downloads folder", Toast.LENGTH_LONG).show();
@@ -514,7 +532,12 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                     }
 
                     Document document = new Document(setPdf());
-                    int totalTasks = items.size();
+                    int totalTasks = 0;
+                    for(ItemCollection i:items){
+                        if(i.getPeriod().equals(period)){
+                            totalTasks++;
+                        }
+                    }
                     final int[] completedTasks = {0};
 
                     Log.w("ReportFragment", "Total tasks: " + totalTasks);
@@ -523,6 +546,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                         if(i.getPeriod().equals(period)){
                             ArrayList<Uri> mediaList = (ArrayList<Uri>) ItemCollection.mediaToUri(i.getMedia());
 
+                            int finalTotalTasks = totalTasks;
                             new FetchMimeTypeTask(mediaList, new FetchMimeTypeCallback() {
                                 @Override
                                 public void onMimeTypeFetched(ArrayList<Uri> mediaList, ArrayList<String> mimeTypes) {
@@ -552,7 +576,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                                             synchronized (completedTasks) {
                                                 completedTasks[0]++;
                                                 Log.w("ReportFragment", "Completed tasks: " + completedTasks[0]);
-                                                if (completedTasks[0] == totalTasks) {
+                                                if (completedTasks[0] == finalTotalTasks) {
                                                     Log.w("ReportFragment", "All tasks completed");
                                                     document.close();
                                                     Toast.makeText(getContext(), "PDF saved to downloads folder", Toast.LENGTH_LONG).show();
@@ -601,7 +625,12 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                     }
 
                     Document document = new Document(setPdf());
-                    int totalTasks = items.size();
+                    int totalTasks = 0;
+                    for(ItemCollection i:items){
+                        if(i.getPeriod().equals(period)){
+                            totalTasks++;
+                        }
+                    }
                     final int[] completedTasks = {0};
 
                     Log.w("ReportFragment", "Total tasks: " + totalTasks);
@@ -610,6 +639,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                         if(i.getPeriod().equals(period)){
                             ArrayList<Uri> mediaList = (ArrayList<Uri>) ItemCollection.mediaToUri(i.getMedia());
 
+                            int finalTotalTasks = totalTasks;
                             new FetchMimeTypeTask(mediaList, new FetchMimeTypeCallback() {
                                 @Override
                                 public void onMimeTypeFetched(ArrayList<Uri> mediaList, ArrayList<String> mimeTypes) {
@@ -639,7 +669,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                                             synchronized (completedTasks) {
                                                 completedTasks[0]++;
                                                 Log.w("ReportFragment", "Completed tasks: " + completedTasks[0]);
-                                                if (completedTasks[0] == totalTasks) {
+                                                if (completedTasks[0] == finalTotalTasks) {
                                                     Log.w("ReportFragment", "All tasks completed");
                                                     document.close();
                                                     Toast.makeText(getContext(), "PDF saved to downloads folder", Toast.LENGTH_LONG).show();
@@ -729,7 +759,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
 
         RADPButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public synchronized void onClick(View v) {
+            public void onClick(View v) {
                 try {
                     if (items == null) {
                         Toast.makeText(getContext(), "Database is Empty", Toast.LENGTH_LONG).show();
