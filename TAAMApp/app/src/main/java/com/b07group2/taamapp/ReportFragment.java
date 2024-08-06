@@ -538,8 +538,8 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
         RADPButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public synchronized void onClick(View v) {
-                try{
-                    if(items==null){
+                try {
+                    if (items == null) {
                         return;
                     }
                     Document document = new Document(setPdf());
@@ -550,49 +550,50 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
 
                     for (ItemCollection i : items) {
                         ArrayList<Uri> mediaList = (ArrayList<Uri>) ItemCollection.mediaToUri(i.getMedia());
-                        final List<Uri>[] imageList = new List[]{new ArrayList<Uri>()};
 
                         new FetchMimeTypeTask(mediaList, new FetchMimeTypeCallback() {
                             @Override
                             public void onMimeTypeFetched(ArrayList<Uri> mediaList, ArrayList<String> mimeTypes) {
+                                ArrayList<Uri> imageRefList = new ArrayList<>();
 
                                 if (mediaList != null) {
                                     for (int media_i = 0; media_i < mediaList.size(); media_i++) {
                                         if (mimeTypes.get(media_i) != null && mimeTypes.get(media_i).startsWith("image")) {
-                                            imageList[0].add(mediaList.get(media_i));
+                                            imageRefList.add(mediaList.get(media_i));
                                         }
                                     }
                                 } else {
-                                    imageList[0] = null;
+                                    imageRefList = null;
                                 }
 
-                                try {
-                                    createPdf(document, i.getLotNumber(), i.getName(), i.getCategory(),
-                                            i.getPeriod(), i.getDescription(), imageList[0]);
-                                } catch (FileNotFoundException e) {
-                                    throw new RuntimeException(e);
-                                } catch (MalformedURLException e) {
-                                    throw new RuntimeException(e);
-                                }
+                                // Download images from Firebase Storage
+                                new DownloadImagesTask(imageRefList, new DownloadImagesCallback() {
+                                    @Override
+                                    public void onImagesDownloaded(List<Image> images) {
+                                        try {
+                                            createPdf(document, i.getLotNumber(), i.getName(), i.getCategory(),
+                                                    i.getPeriod(), i.getDescription(), images);
+                                        } catch (FileNotFoundException | MalformedURLException e) {
+                                            throw new RuntimeException(e);
+                                        }
 
-                                synchronized (completedTasks) {
-                                    completedTasks[0]++;
-                                    Log.w("ReportFragment", "Completed tasks: " + completedTasks[0]);
-                                    if (completedTasks[0] == totalTasks) {
-                                        Log.w("ReportFragment", "All tasks completed");
-                                        document.close();
-                                        Toast.makeText(getContext(), "PDF saved to downloads folder", Toast.LENGTH_LONG).show();
+                                        synchronized (completedTasks) {
+                                            completedTasks[0]++;
+                                            Log.w("ReportFragment", "Completed tasks: " + completedTasks[0]);
+                                            if (completedTasks[0] == totalTasks) {
+                                                Log.w("ReportFragment", "All tasks completed");
+                                                document.close();
+                                                Toast.makeText(getContext(), "PDF saved to downloads folder", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
                                     }
-                                }
+                                }).execute();
 
                             }
                         }).execute();
 
 
                     }
-
-//                    document.close();
-//                    Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }
@@ -603,7 +604,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
 
     //adds pages given the document and data
     private void createPdf(Document document, int lotnumber, String name, String category,
-                           String period, String itemDescription, List<Uri> imageList) throws FileNotFoundException, MalformedURLException {
+                           String period, String itemDescription, List<Image> imageList) throws FileNotFoundException, MalformedURLException {
 
         Log.w("ReportFragment", "Creating PDF for lot number: " + lotnumber);
         Log.w("ReportFragment", "Creating PDF with images: " + imageList);
@@ -633,9 +634,8 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
         document.add(descriptionP.setFontSize(20).setItalic());
 
         if (imageList != null) {
-            for (Uri image : imageList) {
-                Image insert = new Image(ImageDataFactory.create(Uri.encode(image.toString())));
-                document.add(insert);
+            for (Image image : imageList) {
+                document.add(image);
             }
         }
 
