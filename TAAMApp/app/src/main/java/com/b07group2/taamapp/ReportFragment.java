@@ -420,8 +420,8 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                         return;
                     }
                     String category = "foo";
-                    if(!autoCC.getText().toString().isEmpty()){
-                        category = autoCC.getText().toString();
+                    if(!autoCCDP.getText().toString().isEmpty()){
+                        category = autoCCDP.getText().toString();
                     }
                     else{
                         Toast.makeText(getContext(),"Select a category",Toast.LENGTH_LONG).show();
