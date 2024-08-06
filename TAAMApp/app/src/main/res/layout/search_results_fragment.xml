@@ -4,38 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".MainActivity">
 
+    <!-- TextView for query information -->
+    <TextView
+        android:id="@+id/queryInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="331dp"
-        android:layout_height="586dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@id/queryInfo"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/queryInfo"
-        app:layout_constraintVertical_bias="0.448" />
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" />
 
+    <!-- LinearLayout with buttons -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="63dp"
-        android:layout_marginBottom="4dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Button
             android:id="@+id/buttonView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="0dp"
             android:layout_weight="1"
             android:autoSizeTextType="uniform"
             android:paddingLeft="4dp"
@@ -43,16 +57,13 @@
             android:paddingRight="4dp"
             android:paddingBottom="10dp"
             android:text="View"
-            app:cornerRadius="50px" />
+            app:cornerRadius="50dp" />
 
         <Button
             android:id="@+id/buttonNext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
             android:layout_weight="1"
             android:autoSizeTextType="uniform"
             android:paddingLeft="4dp"
@@ -60,15 +71,7 @@
             android:paddingRight="4dp"
             android:paddingBottom="10dp"
             android:text="Next"
-            app:cornerRadius="50px" />
+            app:cornerRadius="50dp" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/queryInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

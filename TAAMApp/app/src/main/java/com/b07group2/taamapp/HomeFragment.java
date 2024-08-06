@@ -94,7 +94,7 @@ public abstract class HomeFragment extends Fragment {
                 buttonSearch.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        loadFragment(new BlankFragment());
+                        loadFragment(new SearchQueryFragment());
                         //put fragment name here instead of BlankFragment
                     }
                 });
