@@ -40,8 +40,6 @@ public class HomeUserFragment extends HomeFragment {
                 //put fragment name here instead of BlankFragment
             }
         });
-        //TODO: uncomment when committing
-        //return  super.onCreateView(inflater, container, savedInstanceState, view);
-        return view;
+        return  super.onCreateView(inflater, container, savedInstanceState);
     }
 }
