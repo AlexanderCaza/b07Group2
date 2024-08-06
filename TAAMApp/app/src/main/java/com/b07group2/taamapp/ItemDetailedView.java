@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.OptIn;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,6 +72,22 @@ public class ItemDetailedView extends AppCompatActivity {
         presenter = new ItemDetailedPresenter(this);
 
         presenter.setInformation(item_lot);
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // release all players if exist
+                for (int i = 0; i < media_layout.getChildCount(); i++) {
+                    android.view.View view = media_layout.getChildAt(i);
+                    if (view instanceof PlayerView) {
+                        PlayerView playerView = (PlayerView) view;
+                        ExoPlayer player = (ExoPlayer) playerView.getPlayer();
+                        player.release();
+                    }
+                }
+                finish();
+            }
+        });
     }
 
     public boolean setInformation(int lot, String name, String category, String period, String description) {
@@ -166,20 +183,5 @@ public class ItemDetailedView extends AppCompatActivity {
 
     public Context getContextForPresenter() {
         return this.getApplicationContext();
-    }
-
-    @Override
-    public void onBackPressed() {
-        // release all players if exist
-        for (int i = 0; i < media_layout.getChildCount(); i++) {
-            android.view.View view = media_layout.getChildAt(i);
-            if (view instanceof PlayerView) {
-                PlayerView playerView = (PlayerView) view;
-                ExoPlayer player = (ExoPlayer) playerView.getPlayer();
-                player.release();
-            }
-        }
-        finish();
-        super.onBackPressed();
     }
 }
