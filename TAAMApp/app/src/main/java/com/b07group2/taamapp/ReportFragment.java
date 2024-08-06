@@ -242,7 +242,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                     }
                     boolean nmExist=false;
                     for(ItemCollection i:items) {
-                        if (i.getName().equals(name)) {
+                        if (i.getName().contains(name)) {
                             nmExist = true;
                             break;
                         }
@@ -255,7 +255,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
                     Document document = new Document(setPdf());
                     int totalTasks = 0;
                     for(ItemCollection i:items){
-                        if(i.getName().equals(name)){
+                        if(i.getName().contains(name)){
                             totalTasks++;
                         }
                     }
@@ -263,8 +263,8 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
 
                     Log.w("ReportFragment", "Total tasks: " + totalTasks);
 
-                    for (ItemCollection i : items) {
-                        if(i.getName().equals(name)){
+                    for (ItemCollection i : items) {//returns items with name that contains the search keyword
+                        if(i.getName().contains(name)){
                             ArrayList<Uri> mediaList = (ArrayList<Uri>) ItemCollection.mediaToUri(i.getMedia());
 
                             int finalTotalTasks = totalTasks;
