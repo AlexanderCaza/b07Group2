@@ -538,7 +538,10 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback {
         RADPButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public synchronized void onClick(View v) {
-                try {
+                try{
+                    if(items==null){
+                        return;
+                    }
                     Document document = new Document(setPdf());
                     int totalTasks = items.size();
                     final int[] completedTasks = {0};
