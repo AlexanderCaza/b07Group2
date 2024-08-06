@@ -319,9 +319,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                     document.close();
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
-                catch(FileNotFoundException e){
-                    throw new RuntimeException(e);
-                } catch (MalformedURLException e) {
+                catch(FileNotFoundException | MalformedURLException e){
                     throw new RuntimeException(e);
                 }
             }
@@ -382,9 +380,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                     document.close();
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
-                catch(FileNotFoundException e){
-                    throw new RuntimeException(e);
-                } catch (MalformedURLException e) {
+                catch(FileNotFoundException | MalformedURLException e){
                     throw new RuntimeException(e);
                 }
             }
@@ -443,9 +439,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                     document.close();
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
-                catch(FileNotFoundException e){
-                    throw new RuntimeException(e);
-                } catch (MalformedURLException e) {
+                catch(FileNotFoundException | MalformedURLException e){
                     throw new RuntimeException(e);
                 }
             }
@@ -504,9 +498,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                     document.close();
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
-                catch(FileNotFoundException e){
-                    throw new RuntimeException(e);
-                } catch (MalformedURLException e) {
+                catch(FileNotFoundException | MalformedURLException e){
                     throw new RuntimeException(e);
                 }
             }
@@ -544,9 +536,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                     document.close();
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
-                catch(FileNotFoundException e){
-                    throw new RuntimeException(e);
-                } catch (MalformedURLException e) {
+                catch(FileNotFoundException | MalformedURLException e){
                     throw new RuntimeException(e);
                 }
             }
@@ -584,9 +574,7 @@ public class ReportFragment extends Fragment implements FetchMimeTypeCallback{
                     document.close();
                     Toast.makeText(getContext(),"PDF saved to downloads folder",Toast.LENGTH_LONG).show();
                 }
-                catch(FileNotFoundException e){
-                    throw new RuntimeException(e);
-                } catch (MalformedURLException e) {
+                catch(FileNotFoundException | MalformedURLException e){
                     throw new RuntimeException(e);
                 }
             }
